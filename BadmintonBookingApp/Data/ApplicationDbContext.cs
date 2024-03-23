@@ -4,18 +4,23 @@ using BadmintonBookingApp.Models.Receipts;
 using BadmintonBookingApp.Models.Reservations;
 using BadmintonBookingApp.Models.Services;
 using BadmintonBookingApp.Models.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BadmintonBookingApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
+        public DbSet<IdentityUser> IdentityUsers { get; set; }  
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Labor> Labors { get; set; }    
+        public DbSet<User> Users {  get; set; } 
         public DbSet<Branch> Branches { get; set; } 
         public DbSet<Court> Courts { get; set; }
         public DbSet<Price> Prices { get; set; }
