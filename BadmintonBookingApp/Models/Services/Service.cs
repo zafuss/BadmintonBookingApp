@@ -19,6 +19,7 @@ namespace BadmintonBookingApp.Models.Services
 
         public string Status { get; set; }
 
+        public string? ImageUrl { get; set; }    
         public List<Service_Detail>? Service_Details { get; set; }
     }
 }
