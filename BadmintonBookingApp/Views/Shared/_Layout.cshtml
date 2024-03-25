@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/css/all.min.css">
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/hotel.css">
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,7 +16,7 @@
 <body>
      <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-          <a class="navbar-brand" href="#home">
+            <a class="navbar-brand" href="#tm-video-container">
             <img src="imgs/logo.png" alt="">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +25,7 @@
           <div class="collapse navbar-collapse" id="main">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="#home">Home</a>
+                        <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="#tm-video-container">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link p-2 p-lg-3" href="#services" >Services</a>
@@ -51,12 +53,22 @@
         </div>
       </nav>
 
-    <div class="landing d-flex justify-content-center align-items-center" id="home">
-        <div class="text-center text-light">
-            <h1 class="text-info">Welcome To Our Hotel</h1>
-            <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
-            <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </div>
+    <div class="landing d-flex justify-content-center align-items-center" id="tm-video-container">
+        <video autoplay muted loop  style="left: 50%;
+                    min-height: 100%;
+                    min-width: 100%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-50%, -50%);">
+            <source src="~/vids/ASTROX, Yonex's Latest Badminton Racquet.mp4" type="video/mp4">
+        </video>
+        @* <form class="d-flex position-absolute tm-search-form">
+            @* <div class="text-center text-light">
+                <h1 class="text-info">Welcome To Our Hotel</h1>
+                <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
+                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </div> 
+        </form> *@
     </div>
     
     <div class="container">
@@ -141,11 +153,65 @@
             </div>
         </div>
     </footer>
+    <script src="js/plugins.js"></script>
+    <script>
+        $(window).on("load", function () {
+            $('body').addClass('loaded');
+        });
+
+        $(function () {
+            /************** Video background *********/
+
+            function setVideoSize() {
+                const vidWidth = 1280;
+                const vidHeight = 720;
+                const maxVidHeight = 400;
+                let windowWidth = window.innerWidth;
+                let newVidWidth = windowWidth;
+                let newVidHeight = windowWidth * vidHeight / vidWidth;
+                let marginLeft = 0;
+                let marginTop = 0;
+
+                if (newVidHeight < maxVidHeight) {
+                    newVidHeight = maxVidHeight;
+                    newVidWidth = newVidHeight * vidWidth / vidHeight;
+                }
+
+                if (newVidWidth > windowWidth) {
+                    marginLeft = -((newVidWidth - windowWidth) / 2);
+                }
+
+                if (newVidHeight > maxVidHeight) {
+                    marginTop = -((newVidHeight - $('#tm-video-container').height()) / 2);
+                }
+
+                const tmVideo = $('#tm-video');
+
+                tmVideo.css('width', newVidWidth);
+                tmVideo.css('height', newVidHeight);
+                tmVideo.css('margin-left', marginLeft);
+                tmVideo.css('margin-top', marginTop);
+            }
+
+            setVideoSize();
+
+            // Set video background size based on window size
+            let timeout;
+            window.onresize = function () {
+                clearTimeout(timeout);
+                timeout = setTimeout(setVideoSize, 100);
+            };
+
+            // Play/Pause button for video background
+        });
+    </script>
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="~/js/all.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
