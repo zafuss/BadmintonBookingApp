@@ -1,5 +1,5 @@
 body {
-    background-image: url(../imgs/Checkout.jpg);
+    background-image: url(~/images/Checkout.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
