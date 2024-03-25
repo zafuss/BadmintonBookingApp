@@ -4,42 +4,61 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BadmintonBookingApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BadmintonBookingApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/hotel.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BadmintonBookingApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Court" asp-action="Index">Court</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Service</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Price" asp-action="Index">Price</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="Index">Reservation</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
+     <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+          <a class="navbar-brand" href="#home">
+            <img src="imgs/logo.png" alt="">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="main">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="#home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 p-lg-3" href="#services" >Services</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link p-2 p-lg-3" href="#court">Court</a>
+
+                </li>
+              <li class="nav-item">
+                 <a class="nav-link p-2  p-lg-3" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2  p-lg-3" href="#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 p-lg-3" href="#contact">Contact</a>
+              </li>
+            </ul>
+           <div class="search ps-3 pe-3 d-none d-lg-block">
+            <i class="fa-solid fa-magnifying-glass"></i>
+           </div>
+                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
+          </div>
+        </div>
+      </nav>
+
+    <div class="landing d-flex justify-content-center align-items-center" id="home">
+        <div class="text-center text-light">
+            <h1 class="text-info">Welcome To Our Hotel</h1>
+            <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
+            <a class="btn rounded-pill main-btn" href="html/register.html">Register</a>
+        </div>
+    </div>
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -47,13 +66,86 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - BadmintonBookingApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="footer pt-5 pb-5 text-white-50 text-center text-md-start">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="info mb-5">
+                            <img src="imgs/logo.png" alt="" class="mb-4" />
+                            <p class="mb-5">
+                                Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed,
+                                convallis at tellus.
+                            </p>
+                            <div class="copyright">
+                                Created By <span>ABMteam</span>
+                                <div>&copy; 2023 - <span>Hotel Inc</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2">
+                        <div class="links">
+                            <h5 class="text-light">Links</h5>
+                            <ul class="list-unstyled lh-lg">
+                                <li>Home</li>
+                                <li>Our Services</li>
+                                <li>Rooms</li>
+                                <li>Support</li>
+                                <li>Terms and Condition</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2">
+                        <div class="links">
+                            <h5 class="text-light">About Us</h5>
+                            <ul class="list-unstyled lh-lg">
+                                <li>Sign In</li>
+                                <li>Register</li>
+                                <li>About Us</li>
+                                <li>Blog</li>
+                                <li>Contact Us</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="contact">
+                            <h5 class="text-light">Contact Us</h5>
+                            <p class="lh-lg mt-3 mb-5">Get in touch with us via mail phone.We are waiting for your call or message</p>
+                            <a class="btn rounded-pill main-btn w-100" href="#">
+                                ABMteam@gmail.com
+                            </a>
+                            <ul class="d-flex mt-5 list-unstyled gap-3">
+                                <li>
+                                    <a class="d-block text-light" href="#">
+                                        <i class="fa-brands fa-facebook fa-lg facebook rounded-circle p-2"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="d-block text-light" href="#">
+                                        <i class="fa-brands fa-twitter fa-lg twitter rounded-circle p-2"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="d-block text-light" href="#">
+                                        <i class="fa-brands fa-linkedin fa-lg linkedin rounded-circle p-2"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="d-block text-light" href="#">
+                                        <i class="fa-brands fa-youtube fa-lg youtube rounded-circle p-2"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script> *@
+    <script src="~/js/all.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
