@@ -5,47 +5,67 @@
     Layout = "~/Views/Shared/_stolenLayout.cshtml";
 }
 <img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
-<div class="landing d-flex justify-content-center align-items-center">
-    <div class="container bg-light col-8 col-lg-3  p-4 rounded opacity-75  ">
-        <form action="###" method="post">
-            <div class="row">
-                <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="First Name" required>
-                    <label for="floatingInput" class="ms-2"> First Name</label>
-                </div>
-                <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" required>
-                    <label for="floatingInput" class="ms-2">Last Name</label>
-                </div>
-            </div>
+<div class="vh-100 gradient-custom">
+    <div class="container py-5 h-100 opacity-80  ">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card" style="background-color: #19283f; color: white; border-radius: 1rem;">
+                    <div class="card-body text-center">
+                        <div class="mb-md-2 mt-md-2 pb-5">
 
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control " id="floatingInput" placeholder="name@example.com" required>
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required minlength="8">
-                <label for="floatingPassword">Password</label>
-                <small class="form-text text-muted">*password must be greater than 8 characters</small>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control " id="floatingInput" placeholder="" required>
-                <label for="floatingInput">Phone Number</label>
-            </div>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="Sex" id="flexRadioDefault1" checked>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Male
-                </label>
-            </div>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="Sex" id="flexRadioDefault2">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Female
-                </label>
-            </div>
-            <input type="submit" value="Sign Up" class="btn  rounded-pill main-btn">
+                            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 
-        </form>
+                                <h2 class="fw-bold mb-2 text-uppercase">Sign Up</h2>
+                                <p class="text-white-50 mb-5">Please enter your Email and Password!</p>
+                                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                                <div class="form-outline form-white mb-4">
+                         @*            <label class="form-label" for="typeEmailX">Email</label>
+                                    <input type="email" id="typeEmailX" required> *@
+                                    <label asp-for="Input.Email">Email</label>
+                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                       @*              <label class="form-label" for="typePasswordX">Password</label>
+                                    <input type="password" id="typePasswordX" required minlength="8"> *@
+                                    <label asp-for="Input.Password">Password</label>
+                                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true"  />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>   
+                                </div>        
+                                <div class="form-outline form-white mb-4">
+                              @*       <label class="form-label" for="typePasswordX">Confirm password</label>
+                                    <input type="password" id="typePasswordX" required minlength="8"> *@
+                                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true"  />
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+
+                                @*       <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="Sex" id="flexRadioDefault1" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                Male
+                                </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="Sex" id="flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                Female
+                                </label>
+                                </div> *@
+                                <input type="submit" value="Sign Up" class="btn  rounded-pill main-btn">
+
+                            </form>
+                        </div>
+                                <div>
+                                    <p class="mb-0">
+                                       Already have an account?<a class="login" class="fw-bold btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                    </p>
+                                </div>
+                </div>
+                    </div>
+            </div>
+        </div>
     </div>
 </div>

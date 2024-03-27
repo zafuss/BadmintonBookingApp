@@ -22,7 +22,7 @@
 
 .gradient-custom input[type="email"]:hover,
 .gradient-custom input[type="password"]:hover {
-    width: 300px;
+    /*width: 300px;*/
     border-color: #2ecc71
 }
 

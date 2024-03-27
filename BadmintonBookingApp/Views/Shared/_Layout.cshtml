@@ -17,7 +17,7 @@
      <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#tm-video-container">
-                <img style="width: 170px" src="./images/logo/badminton_logo_light.png" alt="">
+                <img style="width: 150px" src="./images/logo/badminton_logo_light.png" alt="">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa-solid fa-bars"></i>
@@ -40,17 +40,16 @@
               <li class="nav-item">
                 <a class="nav-link p-2  p-lg-3" href="#about">About</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link p-2 p-lg-3" href="#contact">Contact</a>
-              </li>
+     
             </ul>
            <div class="search ps-3 pe-3 d-none d-lg-block">
             <i class="fa-solid fa-magnifying-glass"></i>
-           </div>
+      @*      </div>
                 <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
                 <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
-          </div>
+          </div> *@
         </div>
+        <partial name="_LoginPartial" />
       </nav>
 
     <div class="landing d-flex justify-content-center align-items-center" id="tm-video-container">
