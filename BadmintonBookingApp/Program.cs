@@ -1,5 +1,7 @@
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.User;
+using BadmintonBookingApp.Repositories;
+using BadmintonBookingApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddScoped<IServiceRepository, EFServiceRepository>();
+builder.Services.AddScoped<ICourtRepository, EFCourtRepository>();
 
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
