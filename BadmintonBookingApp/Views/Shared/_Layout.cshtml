@@ -7,63 +7,166 @@
     <link rel="stylesheet" href="~/css/all.min.css">
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/hotel.css">
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
+    <link rel="stylesheet" href="~/css/Styles.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-     <nav class="navbar navbar-expand-lg sticky-top">
+    @if (User.Identity.IsAuthenticated)
+    {
+        string a = "";
+        @if (User.IsInRole("Admin"))
+        {
+            a = "home-section";
+            <div class="sidebar">
+                <div class="logo-details">
+                    <i class='bx bxl-c-plus-plus icon'></i>
+                    <div class="logo-name">CodingLab</div>
+                    <i class='bx bx-menu' id="btn"></i>
+                </div>
+                <ul class="nav-list" style="padding:initial">
+                    <li>
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Search...">
+                        <span class="tooltip">Search</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-grid-alt'></i>
+                            <span class="links-name">Dashboard</span>
+                        </a>
+                        <span class="tooltip">Dashboard</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-user'></i>
+                            <span class="links-name">User</span>
+                        </a>
+                        <span class="tooltip">User</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-chat'></i>
+                            <span class="links-name">Messages</span>
+                        </a>
+                        <span class="tooltip">Messages</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-pie-chart-alt-2'></i>
+                            <span class="links-name">Analytics</span>
+                        </a>
+                        <span class="tooltip">Analytics</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-folder'></i>
+                            <span class="links-name">File Manager</span>
+                        </a>
+                        <span class="tooltip">Files</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-cart-alt'></i>
+                            <span class="links-name">Order</span>
+                        </a>
+                        <span class="tooltip">Order</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-heart'></i>
+                            <span class="links-name">Saved</span>
+                        </a>
+                        <span class="tooltip">Saved</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-cog'></i>
+                            <span class="links-name">Setting</span>
+                        </a>
+                        <span class="tooltip">Setting</span>
+                    </li>
+                    <li class="profile">
+                        <div class="profile-details">
+                            <img src="~/images/logo/logo_light.png">
+                            <div class="name-job">
+                                <div class="name">Trinhhh</div>
+                                <div class="job">Admin</div>
+                            </div>
+                        </div>
+                        <i class='bx bx-log-out' id="log-out"></i>
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" id="hiddenA" value="@a" />
+        }
+    }
+    <section id="MyElement">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-          <a class="navbar-brand" href="#home">
-            <img src="imgs/logo.png" alt="">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#tm-video-container">
+                <img style="width: 150px" src="./images/logo/badminton_logo_light.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa-solid fa-bars"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="main">
+            </button>
+            <div class="collapse navbar-collapse" id="main">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="#home">Home</a>
-              </li>
-              <li class="nav-item">
+                <li class="nav-item">
+                        <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="#tm-video-container">Home</a>
+                </li>
+                <li class="nav-item">
                 <a class="nav-link p-2 p-lg-3" href="#services" >Services</a>
-              </li>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link p-2 p-lg-3" href="#court">Court</a>
 
                 </li>
-              <li class="nav-item">
-                 <a class="nav-link p-2  p-lg-3" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
-              </li>
-              <li class="nav-item">
+                <li class="nav-item">
+                    <a class="nav-link p-2  p-lg-3" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
+                </li>
+                <li class="nav-item">
                 <a class="nav-link p-2  p-lg-3" href="#about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link p-2 p-lg-3" href="#contact">Contact</a>
-              </li>
+                </li>
+     
             </ul>
-           <div class="search ps-3 pe-3 d-none d-lg-block">
+            <div class="search ps-3 pe-3 d-none d-lg-block">
             <i class="fa-solid fa-magnifying-glass"></i>
-           </div>
+        @*      </div>
                 <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
                 <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
-          </div>
-        </div>
-      </nav>
-
-    <div class="landing d-flex justify-content-center align-items-center" id="home">
-        <div class="text-center text-light">
-            <h1 class="text-info">Welcome To Our Hotel</h1>
-            <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
-            <a class="btn rounded-pill main-btn" href="html/register.html">Register</a>
-        </div>
-    </div>
+            </div> *@
+            </div>
+            <partial name="_LoginPartial" />
+     </nav>
+   @*  <div class="landing d-flex justify-content-center align-items-center" id="tm-video-container">
+        <video autoplay muted loop  style="left: 50%;
+                    min-height: 100%;
+                    min-width: 100%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-50%, -50%);">
+            <source src="~/vids/ASTROX, Yonex's Latest Badminton Racquet.mp4" type="video/mp4">
+        </video>
+        @* <form class="d-flex position-absolute tm-search-form">
+            @* <div class="text-center text-light">
+                <h1 class="text-info">Welcome To Our Hotel</h1>
+                <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
+                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </div> 
+        </form> 
+    </div> *@
     
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        <div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </section>
 
     <footer class="border-top footer text-muted">
         <div class="footer pt-5 pb-5 text-white-50 text-center text-md-start">
@@ -141,11 +244,70 @@
             </div>
         </div>
     </footer>
+    <script src="js/plugins.js"></script>
+    <script>
+        $(window).on("load", function () {
+            $('body').addClass('loaded');
+        });
+
+        $(function () {
+            /************** Video background *********/
+
+            function setVideoSize() {
+                const vidWidth = 1280;
+                const vidHeight = 720;
+                const maxVidHeight = 400;
+                let windowWidth = window.innerWidth;
+                let newVidWidth = windowWidth;
+                let newVidHeight = windowWidth * vidHeight / vidWidth;
+                let marginLeft = 0;
+                let marginTop = 0;
+
+                if (newVidHeight < maxVidHeight) {
+                    newVidHeight = maxVidHeight;
+                    newVidWidth = newVidHeight * vidWidth / vidHeight;
+                }
+
+                if (newVidWidth > windowWidth) {
+                    marginLeft = -((newVidWidth - windowWidth) / 2);
+                }
+
+                if (newVidHeight > maxVidHeight) {
+                    marginTop = -((newVidHeight - $('#tm-video-container').height()) / 2);
+                }
+
+                const tmVideo = $('#tm-video');
+
+                tmVideo.css('width', newVidWidth);
+                tmVideo.css('height', newVidHeight);
+                tmVideo.css('margin-left', marginLeft);
+                tmVideo.css('margin-top', marginTop);
+            }
+
+            setVideoSize();
+
+            // Set video background size based on window size
+            let timeout;
+            window.onresize = function () {
+                clearTimeout(timeout);
+                timeout = setTimeout(setVideoSize, 100);
+            };
+
+            // Play/Pause button for video background
+        });
+    </script>
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="~/js/all.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Script.js"></script>
+    <script>
+        var nameClass = document.getElementById("hiddenA").value;
+        document.getElementById("MyElement").className = nameClass;
+        //alert(nameClass);
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

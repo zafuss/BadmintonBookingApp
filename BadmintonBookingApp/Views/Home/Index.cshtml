@@ -1,12 +1,30 @@
-﻿@{
+﻿@model BadmintonBookingApp.Models.UserModel
+@using BadmintonBookingApp.Data
+@{
     ViewData["Title"] = "Home Page";
 }
-
+<div class="landing d-flex justify-content-center align-items-center" id="tm-video-container">
+    <video autoplay muted loop style="left: 50%;
+                    min-height: 100%;
+                    min-width: 100%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-50%, -50%);">
+        <source src="~/vids/ASTROX, Yonex's Latest Badminton Racquet.mp4" type="video/mp4">
+    </video>
+    @* <form class="d-flex position-absolute tm-search-form">
+    @* <div class="text-center text-light">
+    <h1 class="text-info">Welcome To Our Hotel</h1>
+    <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
+    <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </div>
+    </form> *@
+</div>
 <div class="features text-center pt-5 pb-5">
       <div class="container">
         <div class="main-title mt-5 mb-5 position-relative">
           <img class="mb-4" src="imgs/title.png" alt="" />
-          <h2> HOTEL</h2>
+          <h2>Badminton</h2>
             <p class="text-black-50 text-uppercase">hello in your second house </p>
 
             <div class="row" style="margin-top: -30px;">
@@ -56,11 +74,19 @@
                 <p class="text-black-50 text-uppercase">Prepare To Be Amazed</p>
             </div>
             <div class="row">
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="box" data-work="POOL">
-                            <img class="img-fluid" src="imgs/f1.jpg" alt="" />
-                        </div>
+            @foreach(var service in @Model.services)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="box" data-work="@service.ServiceName">
+                        <img class="img-fluid" src="@service.ImageUrl"  alt="" />
                     </div>
+                </div>
+            }
+            @* <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="box" data-work="POOL">
+                    <img class="img-fluid" src="imgs/f1.jpg" alt="" />
+                </div>
+            </div>
                 
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="box" data-work="POOL">
@@ -102,7 +128,7 @@
                         <img class="img-fluid" src="imgs/46-Sala-Garbí-I-1-500x300.jpg" alt="" />
                     </div>
                 </div>
-            </div>
+            </div> *@
             <div class="d-flex justify-content-center mt-5">
                 <a class="btn rounded-pill main-btn text-uppercase" href="#">I Want More</a>
             </div>
@@ -115,8 +141,20 @@
           <h2>We Serve This</h2>
           <p class="text-black-50 text-uppercase">Prepare To Be Amazed</p>
         </div>
-        <div class="row">
-          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="row tm-mb-90 tm-gallery">
+            @foreach(var court in Model.courts)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                    <figure class="effect-ming tm-video-item">
+                        <img src="~/images/court/court.jpg" alt="Image" class="img-fluid">
+                        <figcaption class="d-flex align-items-center justify-content-center">
+                            <h2>@court.CourtName</h2>
+                            <a asp-action="Display" asp-route-id="@court.Id">View</a> 
+                        </figcaption>
+                    </figure>
+                </div>
+             }
+          @* <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="box" data-work="POOL">
               <img class="img-fluid" src="imgs/f1.jpg" alt="" />
             </div>
@@ -155,7 +193,7 @@
             <div class="box" data-work="RESTAURANTS">
               <img class="img-fluid" src="imgs/46-Sala-Garbí-I-1-500x300.jpg" alt="" />
             </div>
-          </div>
+          </div> *@
         </div>
         <div class="d-flex justify-content-center mt-5">
           <a class="btn rounded-pill main-btn text-uppercase" href="#">I Want More</a>

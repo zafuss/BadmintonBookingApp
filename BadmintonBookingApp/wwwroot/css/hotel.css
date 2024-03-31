@@ -8,13 +8,13 @@
 body{
     font-family: 'Roboto', sans-serif;
 }
-.main-btn{
-    background-color: var(--red-color);
-    color: var(--yellow-color);
+.main-btn {
+    background-color: var(--green-color);
+    /*color: var(--white-color);*/
     padding: 0.5rem 1rem;
 }
 .main-btn:hover{
-    color: var(--yellow-color);
+    color: var(--section-color);
 }
 .main-btn:focus
 {

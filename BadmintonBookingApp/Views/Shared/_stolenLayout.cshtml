@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="~/css/reserve.css">
     <link rel="stylesheet" href="~/css/login.css" />
     <link rel="stylesheet" href="~/css/register.css">
+    <link rel="stylesheet" href="~/css/Styles.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+@*  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         .btn-primary {
@@ -42,50 +44,150 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#home">
-                <img src="imgs/logo.png" alt="">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="main">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3 active" aria-current="page" asp-controller="Home">Home</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        string a = "";
+        @if (User.IsInRole("Admin"))
+        {
+           a = "home-section";
+        <div class="sidebar">
+                <div class="logo-details">
+                    <i class='bx bxl-c-plus-plus icon'></i>
+                    <div class="logo-name">CodingLab</div>
+                    <i class='bx bx-menu' id="btn"></i>
+                </div>
+                <ul class="nav-list" style="padding:initial">
+                    <li>
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Search...">
+                        <span class="tooltip">Search</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" asp-controller="Home">Services</a>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-grid-alt'></i>
+                            <span class="links-name">Dashboard</span>
+                        </a>
+                        <span class="tooltip">Dashboard</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" asp-controller="Home" >Court</a>
-
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-user'></i>
+                            <span class="links-name">User</span>
+                        </a>
+                        <span class="tooltip">User</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2  p-lg-3" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-chat'></i>
+                            <span class="links-name">Messages</span>
+                        </a>
+                        <span class="tooltip">Messages</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2  p-lg-3" href="#about">About</a>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-pie-chart-alt-2'></i>
+                            <span class="links-name">Analytics</span>
+                        </a>
+                        <span class="tooltip">Analytics</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-2 p-lg-3" href="#contact">Contact</a>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-folder'></i>
+                            <span class="links-name">File Manager</span>
+                        </a>
+                        <span class="tooltip">Files</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-cart-alt'></i>
+                            <span class="links-name">Order</span>
+                        </a>
+                        <span class="tooltip">Order</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-heart'></i>
+                            <span class="links-name">Saved</span>
+                        </a>
+                        <span class="tooltip">Saved</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='bx bx-cog'></i>
+                            <span class="links-name">Setting</span>
+                        </a>
+                        <span class="tooltip">Setting</span>
+                    </li>
+                    <li class="profile">
+                        <div class="profile-details">
+                            <img src="~/images/logo/logo_light.png">
+                            <div class="name-job">
+                                <div class="name">Trinhhh</div>
+                                <div class="job">Admin</div>
+                            </div>
+                        </div>
+                        <i class='bx bx-log-out' id="log-out"></i>
                     </li>
                 </ul>
-                <div class="search ps-3 pe-3 d-none d-lg-block">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <a class="btn  rounded-pill main-btn" href="html/login.html">Login</a>
             </div>
+            <input type="hidden" id="hiddenA" value="@a" />
+        }
+    } 
+    
+    <section id="MyElement">
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#tm-video-container">
+                    <img style="width: 150px" src="~/images/logo/badminton_logo_light.png" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="main">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link p-2 p-lg-3 active" aria-current="page" asp-controller="Home" asp-area="">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 p-lg-3" asp-controller="Home" asp-area="">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 p-lg-3" asp-controller="Home" asp-area="">Court</a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 p-lg-3" asp-action="Index" asp-controller="Reservations" asp-area="">Reserve Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 p-lg-3" href="#about">About</a>
+                        </li>
+
+                    </ul>
+                    <div class="search ps-3 pe-3 d-none d-lg-block">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    @* <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a> *@
+                    @* <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a> *@
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+        <div>
+            @RenderBody()
         </div>
-    </nav>
-    <div >
-        @RenderBody()
-    </div>
+    </section>
+ 
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="~/js/all.min.js"></script>
+    <script src="~/js/Script.js"></script>
+    <script>
+        var nameClass = document.getElementById("hiddenA").value;
+        document.getElementById("MyElement").className = nameClass;
+        //alert(nameClass);
+    </script>
+
     <script src="~/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
