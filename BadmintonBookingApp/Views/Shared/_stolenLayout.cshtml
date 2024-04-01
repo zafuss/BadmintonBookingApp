@@ -26,8 +26,8 @@
         string a = "";
         @if (User.IsInRole("Admin"))
         {
-           a = "home-section";
-        <div class="sidebar">
+            a = "home-section";
+            <div class="sidebar">
                 <div class="logo-details">
                     <i class='bx bxl-c-plus-plus icon'></i>
                     <div class="logo-name">CodingLab</div>
@@ -40,39 +40,39 @@
                         <span class="tooltip">Search</span>
                     </li>
                     <li>
-                        <a href="#">
+                        <a asp-area="" asp-action="Index" asp-controller="Court">
                             <i class='bx bx-grid-alt'></i>
-                            <span class="links-name">Dashboard</span>
+                            <span class="links-name">Court</span>
                         </a>
-                        <span class="tooltip">Dashboard</span>
+                        <span class="tooltip">Court</span>
                     </li>
                     <li>
-                        <a href="#">
+                        <a asp-area="" asp-action="Index" asp-controller="Reservation">
+                            <i class='bx bx-user'></i>
+                            <span class="links-name">Reservation</span>
+                        </a>
+                        <span class="tooltip">Reservation</span>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-action="Index" asp-controller="Service">
+                            <i class='bx bx-chat'></i>
+                            <span class="links-name">Service</span>
+                        </a>
+                        <span class="tooltip">Service</span>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Price">
+                            <i class='bx bx-pie-chart-alt-2'></i>
+                            <span class="links-name">Price</span>
+                        </a>
+                        <span class="tooltip">Price</span>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-action="Index" asp-controller="User">
                             <i class='bx bx-user'></i>
                             <span class="links-name">User</span>
                         </a>
                         <span class="tooltip">User</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-chat'></i>
-                            <span class="links-name">Messages</span>
-                        </a>
-                        <span class="tooltip">Messages</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-pie-chart-alt-2'></i>
-                            <span class="links-name">Analytics</span>
-                        </a>
-                        <span class="tooltip">Analytics</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-folder'></i>
-                            <span class="links-name">File Manager</span>
-                        </a>
-                        <span class="tooltip">Files</span>
                     </li>
                     <li>
                         <a href="#">
@@ -109,7 +109,7 @@
             </div>
             <input type="hidden" id="hiddenA" value="@a" />
         }
-    } 
+    }
     
     <section id="MyElement">
         <nav class="navbar navbar-expand-lg sticky-top">
