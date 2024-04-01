@@ -181,13 +181,13 @@ a:hover { color:#009999; }
 .form-group { margin-bottom: 25px; }
 .tm-btn-big { padding: 12px 90px 14px; }
 
-.navbar-toggler:focus { box-shadow: none; }
+/*.navbar-toggler:focus { box-shadow: none; }
 .navbar-brand {
     color: #3399CC;
     font-size: 1.6rem;
 }
 
-.navbar-brand i { font-size: 2rem; }
+.navbar-brand i { font-size: 2rem; }*/
 
 .tm-hero {
     min-height: 200px;
@@ -210,10 +210,10 @@ a.tm-text-primary:hover { color:#666666; }
     text-align: center;
 }
 
-.nav-item { margin-right: 30px; }
-.nav-item:last-child { margin-right: 0; }
+/*.nav-item { margin-right: 30px; }
+.nav-item:last-child { margin-right: 0; }*/
 
-.nav-link {
+/*.nav-link {
     color: #666666;
     border-bottom: 4px solid transparent;
     font-size: 1.2rem;
@@ -237,7 +237,7 @@ a.tm-text-primary:hover { color:#666666; }
 .nav-link-4.active,
 .nav-link-4:hover {
     border-color: #CC66CC;
-}
+}*/
 
 .tm-search-input {
     width: 360px;
