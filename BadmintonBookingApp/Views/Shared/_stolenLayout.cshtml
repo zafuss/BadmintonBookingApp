@@ -54,7 +54,7 @@
                         <span class="tooltip">Reservation</span>
                     </li>
                     <li>
-                        <a asp-area="" asp-action="Index" asp-controller="Service">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Services">
                             <i class='bx bx-chat'></i>
                             <span class="links-name">Service</span>
                         </a>
@@ -114,7 +114,7 @@
     <section id="MyElement">
         <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")#tm-video-container">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home",new {Area = ""})#tm-video-container">
                     <img style="width: 150px" src="~/images/logo/badminton_logo_light.png" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,10 +126,10 @@
                             <a class="nav-link p-2 p-lg-3 active" aria-current="page" asp-controller="Home" asp-area="">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home")#services">Services</a>
+                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#services">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home")#court">Court</a>
+                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court">Court</a>
 
                         </li>
                         <li class="nav-item">
