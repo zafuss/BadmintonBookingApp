@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
@@ -14,10 +15,11 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
     public class ServicesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ServicesController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ServicesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Admin/Services
@@ -43,7 +45,18 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
 
             return View(service);
         }
+        private async Task<string> SaveImage(IFormFile image,int id)
+        {
+            var uniqueFileName = $"{id}_{image.FileName}";
+            var savePath = Path.Combine("wwwroot/images/services", uniqueFileName);
 
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
+
+            return $"images/services/{uniqueFileName}"; // Trả về đường dẫn tương đối
+        }
         // GET: Admin/Services/Create
         public IActionResult Create()
         {
@@ -55,10 +68,21 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ServiceName,Unit,Price,Quantity,Status,ImageUrl")] Service service)
+        public async Task<IActionResult> Create([Bind("Id,ServiceName,Unit,Price,Quantity,Status,ImageUrl")] Service service, IFormFile Image)
         {
             if (ModelState.IsValid)
             {
+                int maxId;
+                if (_context.Services.Count() == 0)
+                {
+                    maxId = 0;
+                }
+                else
+                {
+                    maxId = _context.Services.Max(p => p.Id) + 1;
+
+                }
+                service.ImageUrl = await SaveImage(Image, maxId);
                 _context.Add(service);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -87,7 +111,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ServiceName,Unit,Price,Quantity,Status,ImageUrl")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ServiceName,Unit,Price,Quantity,Status,ImageUrl")] Service service,IFormFile Image)
         {
             if (id != service.Id)
             {
@@ -98,6 +122,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             {
                 try
                 {
+                    service.ImageUrl = await SaveImage(Image,service.Id);
                     _context.Update(service);
                     await _context.SaveChangesAsync();
                 }

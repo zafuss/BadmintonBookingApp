@@ -17,6 +17,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 15px;
+        }
+    </style>
 </head>
 <body>
     @if (User.Identity.IsAuthenticated)
@@ -129,7 +143,7 @@
                             <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home")#court">Court</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link p-2  p-lg-3" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
+                    <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link p-2  p-lg-3" href="#about">About</a>
