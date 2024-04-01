@@ -19,26 +19,26 @@
                                 <p class="text-white-50 mb-5">Please enter your Email and Password!</p>
                                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                                 <div class="form-outline form-white mb-4">
-                         @*            <label class="form-label" for="typeEmailX">Email</label>
+                                    @*            <label class="form-label" for="typeEmailX">Email</label>
                                     <input type="email" id="typeEmailX" required> *@
                                     <label asp-for="Input.Email">Email</label>
-                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <input asp-for="Input.Email" class="form-control round-input" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                                     <span asp-validation-for="Input.Email" class="text-danger"></span>
 
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
-                       @*              <label class="form-label" for="typePasswordX">Password</label>
+                                    @*              <label class="form-label" for="typePasswordX">Password</label>
                                     <input type="password" id="typePasswordX" required minlength="8"> *@
                                     <label asp-for="Input.Password">Password</label>
-                                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true"  />
-                                    <span asp-validation-for="Input.Password" class="text-danger"></span>   
-                                </div>        
+                                    <input asp-for="Input.Password" class="form-control round-input" autocomplete="new-password" aria-required="true" />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
                                 <div class="form-outline form-white mb-4">
-                              @*       <label class="form-label" for="typePasswordX">Confirm password</label>
+                                    @*       <label class="form-label" for="typePasswordX">Confirm password</label>
                                     <input type="password" id="typePasswordX" required minlength="8"> *@
                                     <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true"  />
+                                    <input asp-for="Input.ConfirmPassword" class="form-control round-input" autocomplete="new-password" aria-required="true" />
                                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                 </div>
 
@@ -54,17 +54,17 @@
                                 Female
                                 </label>
                                 </div> *@
-                                <input type="submit" value="Sign Up" class="btn  rounded-pill main-btn">
+                                <input  type="submit" value="Sign Up" class="submit-button btn rounded-pill main-btn">
 
                             </form>
                         </div>
-                                <div>
-                                    <p class="mb-0">
-                                       Already have an account?<a class="login" class="fw-bold btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                                    </p>
-                                </div>
-                </div>
+                        <div>
+                            <p class="mb-0">
+                                Already have an account?<a class="login" class="fw-bold btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                            </p>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>

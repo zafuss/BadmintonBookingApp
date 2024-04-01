@@ -4,7 +4,7 @@
     background-size: 100% 100%;
 }
 
-.gradient-custom input[type="email"],
+/*.gradient-custom input[type="email"],
 .gradient-custom input[type="password"] {
     border: 0;
     background: none;
@@ -18,10 +18,25 @@
     color: white;
     border-radius: 24px;
     transition: 0.25s
-}
+}*/
 
-.gradient-custom input[type="email"]:hover,
-.gradient-custom input[type="password"]:hover {
+.round-input {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+/*.gradient-custom input[type="email"]:hover,*/
+/*.gradient-custom input[type="password"]:hover*/
+.round-input:hover {
     /*width: 300px;*/
     border-color: #2ecc71
 }
@@ -81,13 +96,16 @@
     transition: all 0.8s
 }
 
-.gradient-custom a.signup:link,.gradient-custom a.signup:visited{
-    color:white;
+.gradient-custom a.signup{
+    width: 250px;
 }
 
-.gradient-custom a.signup:hover{
+/*.gradient-custom a.signup:hover{
     color:#2ecc71;
-}
+}*/
 
+.submit-button {
+    width: 250px;
+}
 
 
