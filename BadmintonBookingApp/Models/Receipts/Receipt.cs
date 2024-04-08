@@ -20,6 +20,6 @@ namespace BadmintonBookingApp.Models.Receipts
 
         public Reservation? Reservation { get; set; }
 
-        public Labor Labor { get; set; }
+        public AppUser Labor { get; set; }
     }
 }

@@ -17,10 +17,8 @@ namespace BadmintonBookingApp.Data
         {
         }
 
-        public DbSet<IdentityUser> IdentityUsers { get; set; }  
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Labor> Labors { get; set; }    
-        public DbSet<User> Users {  get; set; } 
+        public DbSet<IdentityUser> IdentityUsers { get; set; }   
+        public DbSet<AppUser> Users {  get; set; } 
         public DbSet<Branch> Branches { get; set; } 
         public DbSet<Court> Courts { get; set; }
         public DbSet<Price> Prices { get; set; }

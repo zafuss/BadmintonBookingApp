@@ -22,8 +22,8 @@ namespace BadmintonBookingApp.Models.Reservations
         //public int PriceId { get; set; }
         public int Status { get; set; }
         public Price? Price { get; set; }
-        public Labor? Labor { get; set; }
-        public Customer Customer { get; set; }
+        public AppUser? Labor { get; set; }
+        public AppUser Customer { get; set; }
 
         public Receipt? Receipt { get; set; }
 

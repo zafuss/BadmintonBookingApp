@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BadmintonBookingApp.Models.User
 {
-    public class User : IdentityUser
+    public class AppUser : IdentityUser
     {
         public string FullName { get; set; }
 

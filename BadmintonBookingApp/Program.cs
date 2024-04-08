@@ -22,7 +22,7 @@ builder.Services.AddScoped<ICourtRepository, EFCourtRepository>();
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 options.SignIn.RequireConfirmedAccount = true)
 
 .AddEntityFrameworkStores<ApplicationDbContext>()
