@@ -14,7 +14,7 @@ namespace BadmintonBookingApp.Repositories
 
         public async Task<IEnumerable<Court>> GetAllAsync()
         {
-            return await _context.Courts.ToListAsync();
+            return await _context.Courts.OrderByDescending(x => x.Status).ThenBy(x =>x.CourtName).ToListAsync();
         }
         public async Task<Court> GetByIdAsync(int? id)
         {
