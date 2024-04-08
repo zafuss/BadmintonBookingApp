@@ -13,9 +13,8 @@ namespace BadmintonBookingApp.Models.Services
 
         //public int UserId { get; set; }
 
-        public AppUser? Customer { get; set; }
+        public AppUser? User { get; set; }
 
-        public AppUser Labor { get; set; }
 
         public List<Service_Detail>? Service_Details { get; set; }
     }
