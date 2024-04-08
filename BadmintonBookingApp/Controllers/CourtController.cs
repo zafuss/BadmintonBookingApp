@@ -15,6 +15,8 @@ namespace BadmintonBookingApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ICourtRepository _courtRepository;
+        private static DateTime _dateTime;
+
         public CourtController(ApplicationDbContext context,ICourtRepository courtRepository)
         {
             _context = context;
@@ -24,7 +26,8 @@ namespace BadmintonBookingApp.Controllers
         // GET: Court
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Courts.ToListAsync());
+            //return View(await _context.Courts.ToListAsync());
+            return View(await _courtRepository.GetAllAsync());
         }
 
         // GET: Court/Details/5
@@ -81,9 +84,9 @@ namespace BadmintonBookingApp.Controllers
             {
                 return NotFound();
             }
+            _dateTime = court.StateDate;
             return View(court);
         }
-
         // POST: Court/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -95,11 +98,11 @@ namespace BadmintonBookingApp.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    court.StateDate = _dateTime;
                     _context.Update(court);
                     await _context.SaveChangesAsync();
                 }

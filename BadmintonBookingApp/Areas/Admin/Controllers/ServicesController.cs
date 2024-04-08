@@ -9,6 +9,7 @@ using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using BadmintonBookingApp.Models.Facilities;
 
 namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
@@ -18,6 +19,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private static string? _image;
         public ServicesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -105,6 +107,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            _image = service.ImageUrl;
             return View(service);
         }
 
@@ -113,18 +116,25 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ServiceName,Unit,Price,Quantity,Status,ImageUrl")] Service service,IFormFile Image)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ServiceName,Unit,Price,Quantity,Status,ImageUrl")] Service service,IFormFile? Image)
         {
             if (id != service.Id)
             {
                 return NotFound();
             }
-
+           
             if (ModelState.IsValid)
             {
                 try
                 {
-                    service.ImageUrl = await SaveImage(Image, service.Id);
+                    if (string.IsNullOrEmpty(service.ImageUrl))
+                    {
+                        service.ImageUrl = _image;
+                    }
+                    else
+                    {
+                        service.ImageUrl = await SaveImage(Image, service.Id);
+                    }
                     _context.Update(service);
                     await _context.SaveChangesAsync();
                 }
