@@ -76,11 +76,15 @@
             <div class="row">
             @foreach(var service in @Model.services)
             {
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="box" data-work="@service.ServiceName">
-                        <img class="img-fluid" src="@service.ImageUrl"  alt="" />
+                if (@service.Status == "Không hiện thị")
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="box" data-work="@service.ServiceName">
+                            <img class="img-fluid" src="@service.ImageUrl" alt="" />
+                        </div>
                     </div>
-                </div>
+                }
+                
             }
             @* <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="box" data-work="POOL">
@@ -144,15 +148,19 @@
             <div class="row tm-mb-90 tm-gallery">
             @foreach(var court in Model.courts)
             {
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                    <figure class="effect-ming tm-video-item">
-                        <img src="~/images/court/court.jpg" alt="Image" class="img-fluid">
-                        <figcaption class="d-flex align-items-center justify-content-center">
-                            <h2>@court.CourtName</h2>
-                            <a asp-action="Display" asp-route-id="@court.Id">View</a> 
-                        </figcaption>
-                    </figure>
-                </div>
+                if(court.Status != 0)
+                {
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                        <figure class="effect-ming tm-video-item">
+                            <img src="~/images/court/court.jpg" alt="Image" class="img-fluid">
+                            <figcaption class="d-flex align-items-center justify-content-center">
+                                <h2>@court.CourtName</h2>
+                                <a asp-action="Display" asp-route-id="@court.Id">View</a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                }
+                
              }
           @* <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="box" data-work="POOL">

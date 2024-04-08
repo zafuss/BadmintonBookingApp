@@ -16,7 +16,7 @@ namespace BadmintonBookingApp.Repositories
         {
             return await _context.Courts.ToListAsync();
         }
-        public async Task<Court> GetByIdAsync(int id)
+        public async Task<Court> GetByIdAsync(int? id)
         {
             return await _context.Courts.FindAsync(id);
         }
@@ -30,10 +30,14 @@ namespace BadmintonBookingApp.Repositories
             _context.Courts.Update(court);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int? id)
         {
             var court = await _context.Courts.FindAsync(id);
-            _context.Courts.Remove(court);
+            if (court != null)
+            {
+                court.Status = 0;
+            }
+            _context.Courts.Update(court);
             await _context.SaveChangesAsync();
         }
 

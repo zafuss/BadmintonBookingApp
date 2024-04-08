@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Facilities;
+using BadmintonBookingApp.Repositories;
 
 namespace BadmintonBookingApp.Controllers
 {
     public class CourtController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CourtController(ApplicationDbContext context)
+        private readonly ICourtRepository _courtRepository;
+        public CourtController(ApplicationDbContext context,ICourtRepository courtRepository)
         {
             _context = context;
+            _courtRepository = courtRepository;
         }
 
         // GET: Court
@@ -56,6 +58,7 @@ namespace BadmintonBookingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CourtName,StateDate,Status")] Court court)
         {
+            court.StateDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Add(court);
@@ -124,8 +127,7 @@ namespace BadmintonBookingApp.Controllers
                 return NotFound();
             }
 
-            var court = await _context.Courts
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var court = await _courtRepository.GetByIdAsync(id);
             if (court == null)
             {
                 return NotFound();
@@ -139,13 +141,13 @@ namespace BadmintonBookingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var court = await _context.Courts.FindAsync(id);
-            if (court != null)
-            {
-                _context.Courts.Remove(court);
-            }
+            //var court = await _context.Courts.FindAsync(id);
+            //if (court != null)
+            //{
+            //    _context.Courts.Remove(court);
+            //}
 
-            await _context.SaveChangesAsync();
+            await _courtRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
