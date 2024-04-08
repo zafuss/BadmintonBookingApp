@@ -10,6 +10,7 @@ using BadmintonBookingApp.Models.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using BadmintonBookingApp.Models.Facilities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
@@ -127,7 +128,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(service.ImageUrl))
+                    if (Image == null)
                     {
                         service.ImageUrl = _image;
                     }
