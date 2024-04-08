@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"),Authorize(Roles ="Admin")]
+
     public class ServicesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -89,7 +91,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             }
             return View(service);
         }
-
+       
         // GET: Admin/Services/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -122,7 +124,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             {
                 try
                 {
-                    service.ImageUrl = await SaveImage(Image,service.Id);
+                    service.ImageUrl = await SaveImage(Image, service.Id);
                     _context.Update(service);
                     await _context.SaveChangesAsync();
                 }
@@ -141,7 +143,6 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             }
             return View(service);
         }
-
         // GET: Admin/Services/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
