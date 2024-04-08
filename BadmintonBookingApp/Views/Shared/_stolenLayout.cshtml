@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet" />
-@*  <link rel="preconnect" href="https://fonts.googleapis.com">
+    @*  <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -34,11 +34,11 @@
                     <i class='bx bx-menu' id="btn"></i>
                 </div>
                 <ul class="nav-list" style="padding:initial">
-                    <li>
-                        <i class='bx bx-search'></i>
-                        <input type="text" placeholder="Search...">
-                        <span class="tooltip">Search</span>
-                    </li>
+                    @* <li>
+            <i class='bx bx-search'></i>
+            <input type="text" placeholder="Search...">
+            <span class="tooltip">Search</span>
+            </li> *@
                     <li>
                         <a asp-area="" asp-action="Index" asp-controller="Court">
                             <i class='bx bx-grid-alt'></i>
@@ -48,7 +48,7 @@
                     </li>
                     <li>
                         <a asp-area="" asp-action="Index" asp-controller="Reservation">
-                            <i class='bx bx-user'></i>
+                            <i class='bx bx-cart-alt'></i>
                             <span class="links-name">Reservation</span>
                         </a>
                         <span class="tooltip">Reservation</span>
@@ -74,43 +74,43 @@
                         </a>
                         <span class="tooltip">User</span>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-cart-alt'></i>
-                            <span class="links-name">Order</span>
-                        </a>
-                        <span class="tooltip">Order</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-heart'></i>
-                            <span class="links-name">Saved</span>
-                        </a>
-                        <span class="tooltip">Saved</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-cog'></i>
-                            <span class="links-name">Setting</span>
-                        </a>
-                        <span class="tooltip">Setting</span>
-                    </li>
+                    @* <li>
+            <a href="#">
+            <i class='bx bx-cart-alt'></i>
+            <span class="links-name">Order</span>
+            </a>
+            <span class="tooltip">Order</span>
+            </li>
+            <li>
+            <a href="#">
+            <i class='bx bx-heart'></i>
+            <span class="links-name">Saved</span>
+            </a>
+            <span class="tooltip">Saved</span>
+            </li>
+            <li>
+            <a href="#">
+            <i class='bx bx-cog'></i>
+            <span class="links-name">Setting</span>
+            </a>
+            <span class="tooltip">Setting</span>
+            </li> *@
                     <li class="profile">
                         <div class="profile-details">
                             <img src="~/images/logo/logo_light.png">
                             <div class="name-job">
-                                <div class="name">Trinhhh</div>
+                                <div class="name">@User.Identity.Name</div>
                                 <div class="job">Admin</div>
                             </div>
                         </div>
-                        <i class='bx bx-log-out' id="log-out"></i>
+                        <a asp-area="Identity" asp-page="/Account/Logout"><i class='bx bx-log-out' id="log-out"></i></a>
                     </li>
                 </ul>
             </div>
             <input type="hidden" id="hiddenA" value="@a" />
         }
     }
-    
+
     <section id="MyElement">
         <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
@@ -120,7 +120,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="main">
+                <div class="collapse navbar-collapse" id="main" style="background: #19283F">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link p-2 p-lg-3 active" aria-current="page" asp-controller="Home" asp-area="">Home</a>
@@ -145,15 +145,13 @@
                     </div>
                     @* <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a> *@
                     @* <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a> *@
-                </div>
-                <partial name="_LoginPartial" />
-            </div>
+                    <partial name="_LoginPartial" />
         </nav>
         <div>
             @RenderBody()
         </div>
     </section>
- 
+
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
