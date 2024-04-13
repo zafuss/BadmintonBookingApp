@@ -16,7 +16,6 @@ namespace BadmintonBookingApp.Data
             : base(options)
         {
         }
-
         public DbSet<IdentityUser> IdentityUsers { get; set; }   
         public DbSet<AppUser> Users {  get; set; } 
         public DbSet<Branch> Branches { get; set; } 

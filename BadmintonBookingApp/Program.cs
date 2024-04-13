@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IServiceRepository, EFServiceRepository>();
 builder.Services.AddScoped<ICourtRepository, EFCourtRepository>();
+builder.Services.AddScoped<IReservation, EFReservation>();
 
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)

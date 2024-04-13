@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BadmintonBookingApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240408035316_v4")]
-    partial class v4
+    [Migration("20240408125702_modRFD")]
+    partial class modRFD
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,10 +108,6 @@ namespace BadmintonBookingApp.Migrations
                     b.Property<float>("ExtraTime")
                         .HasColumnType("real");
 
-                    b.Property<string>("LaborId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Payment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -123,12 +119,16 @@ namespace BadmintonBookingApp.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("LaborId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ReservationId")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Receipts");
                 });
@@ -145,7 +145,6 @@ namespace BadmintonBookingApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ReservationId")
@@ -168,15 +167,14 @@ namespace BadmintonBookingApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Deposite")
                         .HasPrecision(18, 2)
@@ -184,9 +182,6 @@ namespace BadmintonBookingApp.Migrations
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("LaborId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PriceId")
                         .HasColumnType("nvarchar(450)");
@@ -197,11 +192,12 @@ namespace BadmintonBookingApp.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("LaborId");
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("PriceId");
 
@@ -280,22 +276,16 @@ namespace BadmintonBookingApp.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LaborId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("Total")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("LaborId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Service_Receipts");
                 });
@@ -507,7 +497,7 @@ namespace BadmintonBookingApp.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BadmintonBookingApp.Models.User.User", b =>
+            modelBuilder.Entity("BadmintonBookingApp.Models.User.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -521,21 +511,7 @@ namespace BadmintonBookingApp.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("User");
-                });
-
-            modelBuilder.Entity("BadmintonBookingApp.Models.User.Customer", b =>
-                {
-                    b.HasBaseType("BadmintonBookingApp.Models.User.User");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
-            modelBuilder.Entity("BadmintonBookingApp.Models.User.Labor", b =>
-                {
-                    b.HasBaseType("BadmintonBookingApp.Models.User.User");
-
-                    b.HasDiscriminator().HasValue("Labor");
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Facilities.Court", b =>
@@ -549,21 +525,21 @@ namespace BadmintonBookingApp.Migrations
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Receipts.Receipt", b =>
                 {
-                    b.HasOne("BadmintonBookingApp.Models.User.Labor", "Labor")
-                        .WithMany("Receipts")
-                        .HasForeignKey("LaborId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BadmintonBookingApp.Models.Reservations.Reservation", "Reservation")
                         .WithOne("Receipt")
                         .HasForeignKey("BadmintonBookingApp.Models.Receipts.Receipt", "ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Labor");
+                    b.HasOne("BadmintonBookingApp.Models.User.AppUser", "User")
+                        .WithMany("Receipts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Reservation");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Reservations.RF_Detail", b =>
@@ -583,23 +559,15 @@ namespace BadmintonBookingApp.Migrations
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Reservations.Reservation", b =>
                 {
-                    b.HasOne("BadmintonBookingApp.Models.User.Customer", "Customer")
+                    b.HasOne("BadmintonBookingApp.Models.User.AppUser", "AppUser")
                         .WithMany("Reservations")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BadmintonBookingApp.Models.User.Labor", "Labor")
-                        .WithMany("Reservations")
-                        .HasForeignKey("LaborId");
+                        .HasForeignKey("AppUserId");
 
                     b.HasOne("BadmintonBookingApp.Models.Managements.Price", "Price")
                         .WithMany("Reservations")
                         .HasForeignKey("PriceId");
 
-                    b.Navigation("Customer");
-
-                    b.Navigation("Labor");
+                    b.Navigation("AppUser");
 
                     b.Navigation("Price");
                 });
@@ -625,19 +593,11 @@ namespace BadmintonBookingApp.Migrations
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Services.Service_Receipt", b =>
                 {
-                    b.HasOne("BadmintonBookingApp.Models.User.Customer", "Customer")
+                    b.HasOne("BadmintonBookingApp.Models.User.AppUser", "User")
                         .WithMany("Service_Receipts")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("BadmintonBookingApp.Models.User.Labor", "Labor")
-                        .WithMany("Service_Receipts")
-                        .HasForeignKey("LaborId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Labor");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -723,14 +683,7 @@ namespace BadmintonBookingApp.Migrations
                     b.Navigation("Service_Details");
                 });
 
-            modelBuilder.Entity("BadmintonBookingApp.Models.User.Customer", b =>
-                {
-                    b.Navigation("Reservations");
-
-                    b.Navigation("Service_Receipts");
-                });
-
-            modelBuilder.Entity("BadmintonBookingApp.Models.User.Labor", b =>
+            modelBuilder.Entity("BadmintonBookingApp.Models.User.AppUser", b =>
                 {
                     b.Navigation("Receipts");
 

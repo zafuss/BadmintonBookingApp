@@ -14,7 +14,6 @@ namespace BadmintonBookingApp.Models.User
         public string? ImageUrl { get; set; }    
         public List<Service_Receipt>? Service_Receipts { get; set; }
         public List<Reservation>? Reservations { get; set; }
-
         public List<Receipt> Receipts { get; set; } 
     }
 }

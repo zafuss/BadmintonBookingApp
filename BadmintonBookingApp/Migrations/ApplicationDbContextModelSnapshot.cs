@@ -142,7 +142,6 @@ namespace BadmintonBookingApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ReservationId")
@@ -164,6 +163,9 @@ namespace BadmintonBookingApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
@@ -188,13 +190,13 @@ namespace BadmintonBookingApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("AppUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PriceId");
 
                     b.ToTable("Reservations");
                 });
@@ -554,17 +556,17 @@ namespace BadmintonBookingApp.Migrations
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Reservations.Reservation", b =>
                 {
+                    b.HasOne("BadmintonBookingApp.Models.User.AppUser", "AppUser")
+                        .WithMany("Reservations")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("BadmintonBookingApp.Models.Managements.Price", "Price")
                         .WithMany("Reservations")
                         .HasForeignKey("PriceId");
 
-                    b.HasOne("BadmintonBookingApp.Models.User.AppUser", "User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserId");
+                    b.Navigation("AppUser");
 
                     b.Navigation("Price");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Services.Service_Detail", b =>

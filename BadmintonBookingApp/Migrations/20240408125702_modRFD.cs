@@ -5,16 +5,16 @@
 namespace BadmintonBookingApp.Migrations
 {
     /// <inheritdoc />
-    public partial class v3 : Migration
+    public partial class modRFD : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
-                name: "Status",
-                table: "Services",
-                type: "int",
-                nullable: false,
+            migrationBuilder.AlterColumn<string>(
+                name: "Note",
+                table: "RF_Details",
+                type: "nvarchar(max)",
+                nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
         }
@@ -23,12 +23,14 @@ namespace BadmintonBookingApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Status",
-                table: "Services",
+                name: "Note",
+                table: "RF_Details",
                 type: "nvarchar(max)",
                 nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
     }
 }

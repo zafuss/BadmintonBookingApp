@@ -8,10 +8,10 @@ namespace BadmintonBookingApp.Models.Reservations
         //public string ReservationId { get; set; }   
         //public string CourtId { get; set;}
 
-        public string Note { get; set; }
-
+        public string? Note { get; set; }
+        public int? ReservationId { set; get; }
         public Reservation? Reservation { get; set; }
-
+        public int? CourtId { get; set; }
         public Court? Court { get; set; }
     }
 }

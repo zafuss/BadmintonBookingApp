@@ -4,7 +4,9 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_stolenLayout.cshtml";
 }
-<img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
+@* <img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%"> *@
+<a asp-action="Create" asp-controller="Reservations">Create new</a>
+@*
 <div class="vh-100 gradient-custom">
     <div class="container py-5 h-100 opacity-80">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -84,3 +86,4 @@
     </div>
 </div>
 </div>
+*@

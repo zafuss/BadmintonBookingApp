@@ -1,0 +1,41 @@
+﻿@model BadmintonBookingApp.Models.Reservations.RF_Detail
+
+@{
+    ViewData["Title"] = "RFD";
+
+}
+
+<h1>RFD</h1>
+
+<h4>RF_Detail </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RFD">
+            <div class="form-control">
+                <label asp-for="CourtId" class="control-label"></label>
+                <select asp-for="CourtId" class="form-control" asp-items="ViewBag.Court"></select>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="RFD" class="btn btn-primary"/>
+            </div>
+        </form>
+        @await Component.InvokeAsync("RF_Details")
+        @*@<vc:RF_Details rev=@a></vc:RF_Details>*@
+        <a asp-area="" asp-action="Finish" asp-controller="Reservations">Finish</a>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

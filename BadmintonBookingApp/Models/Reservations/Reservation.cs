@@ -22,11 +22,9 @@ namespace BadmintonBookingApp.Models.Reservations
         //public int PriceId { get; set; }
         public int Status { get; set; }
         public Price? Price { get; set; }
-        public AppUser? User { get; set; }
- 
-
+        public string? UserId { get; set; }
+        public AppUser? AppUser { get; set; }
         public Receipt? Receipt { get; set; }
-
         public List<RF_Detail>? RF_Details { get; set; }
     }
 }

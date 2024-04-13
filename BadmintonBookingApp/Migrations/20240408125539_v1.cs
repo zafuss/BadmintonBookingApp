@@ -214,23 +214,16 @@ namespace BadmintonBookingApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    LaborId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Service_Receipts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Service_Receipts_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
+                        name: "FK_Service_Receipts_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Service_Receipts_AspNetUsers_LaborId",
-                        column: x => x.LaborId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,21 +260,15 @@ namespace BadmintonBookingApp.Migrations
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     PriceId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    LaborId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservations_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reservations_AspNetUsers_LaborId",
-                        column: x => x.LaborId,
+                        name: "FK_Reservations_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -329,17 +316,17 @@ namespace BadmintonBookingApp.Migrations
                     ExtraTime = table.Column<float>(type: "real", nullable: false),
                     ReservationId = table.Column<int>(type: "int", nullable: false),
                     Payment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LaborId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Receipts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Receipts_AspNetUsers_LaborId",
-                        column: x => x.LaborId,
+                        name: "FK_Receipts_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Receipts_Reservations_ReservationId",
                         column: x => x.ReservationId,
@@ -418,25 +405,20 @@ namespace BadmintonBookingApp.Migrations
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Receipts_LaborId",
-                table: "Receipts",
-                column: "LaborId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Receipts_ReservationId",
                 table: "Receipts",
                 column: "ReservationId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_CustomerId",
-                table: "Reservations",
-                column: "CustomerId");
+                name: "IX_Receipts_UserId",
+                table: "Receipts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_LaborId",
+                name: "IX_Reservations_AppUserId",
                 table: "Reservations",
-                column: "LaborId");
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_PriceId",
@@ -464,14 +446,9 @@ namespace BadmintonBookingApp.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Service_Receipts_CustomerId",
+                name: "IX_Service_Receipts_UserId",
                 table: "Service_Receipts",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Service_Receipts_LaborId",
-                table: "Service_Receipts",
-                column: "LaborId");
+                column: "UserId");
         }
 
         /// <inheritdoc />
