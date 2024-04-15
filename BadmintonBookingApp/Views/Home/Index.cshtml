@@ -76,7 +76,7 @@
             <div class="row">
                 @foreach(var service in @Model.services)
                 {
-                    if (@service.Status == 1)
+                    if (@service.Status != 0)
                     {
                         <div class="col-sm-6 col-md-4 col-lg-3">
                             <div class="box" data-work="@service.ServiceName">

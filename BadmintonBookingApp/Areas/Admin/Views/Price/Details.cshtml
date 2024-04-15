@@ -1,4 +1,5 @@
-﻿@model BadmintonBookingApp.Models.Managements.Price
+﻿@using BadmintonBookingApp.Models.Facilities
+@model BadmintonBookingApp.Models.Managements.Price
 
 @{
     ViewData["Title"] = "Details";
@@ -33,11 +34,11 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
+            @Status.GetValue(Model.Status,Status.priceDictionary)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>

@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class = "col-sm-10">
-            @Status.GetValue(Model.Status)
+            @Status.GetValue(Model.Status,Status.courtDictionary)
         </dd>
     </dl>
 </div>

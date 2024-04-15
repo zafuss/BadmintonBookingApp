@@ -1,23 +1,29 @@
-﻿@model BadmintonBookingApp.Models.Managements.Price
+﻿@using BadmintonBookingApp.Models.Facilities
+@model BadmintonBookingApp.Models.Managements.Price
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
 
-<h4>Price</h4>
-<hr />
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 15px;
+    }
+</style>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="PriceTag" class="control-label"></label>
                 <input asp-for="PriceTag" class="form-control" />
@@ -35,8 +41,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <select style="border-radius:5px" class="form-control" asp-items="@Status.GetValue(Status.priceDictionary)" asp-for="Status"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

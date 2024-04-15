@@ -5,12 +5,19 @@ namespace BadmintonBookingApp.Models.Facilities
 {
     public static class Status
     {
-        public static Dictionary<int, string> myDictionary = new Dictionary<int, string>()
+        public static Dictionary<int, string> courtDictionary = new Dictionary<int, string>()
         {
-            { 0, " Không Hoạt Động" }, { 1, "Đang Hoạt Động" } 
+            { 0, "Không Hoạt Động" }, { 1, "Đang Hoạt Động" } 
         };
-
-        public static string GetValue(int key) 
+        public static Dictionary<int, string> priceDictionary = new Dictionary<int, string>()
+        {
+            { 0, "Không áp dụng" }, { 1, "Đang áp dụng" }
+        };
+        public static Dictionary<int, string> serviceDictionary = new Dictionary<int, string>()
+        {
+            { 0, "Hết phục vụ" }, { 1, "Đang phục vụ" }
+        };
+        public static string GetValue(int key,Dictionary<int,string> myDictionary) 
         {
             if (myDictionary.ContainsKey(key))
             {
@@ -22,7 +29,7 @@ namespace BadmintonBookingApp.Models.Facilities
             }
         }
 
-        public static IEnumerable<SelectListItem> GetValue()
+        public static IEnumerable<SelectListItem> GetValue(Dictionary<int, string> myDictionary)
         {
             List<SelectListItem> listSelListItem = new List<SelectListItem>();
             SelectListItem tmp;

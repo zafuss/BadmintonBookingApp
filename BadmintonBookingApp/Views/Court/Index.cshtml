@@ -33,7 +33,7 @@
                 @Html.DisplayFor(modelItem => item.StateDate)
             </td>
             <td>
-                @Status.GetValue(item.Status)
+                @Status.GetValue(item.Status,Status.courtDictionary)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
