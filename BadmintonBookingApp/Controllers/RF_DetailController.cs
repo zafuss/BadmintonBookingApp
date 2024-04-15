@@ -206,5 +206,13 @@ namespace BadmintonBookingApp.Controllers
         {
             return _context.RF_Details.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> Remove(int Id)
+        {
+            var rf = _context.RF_Details.FirstOrDefault(e => e.Id == Id);
+            _context.RF_Details.Remove(rf);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("RFD");
+        }
     }
 }

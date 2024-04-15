@@ -6,9 +6,6 @@
 
 <h1>Finish</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -30,9 +27,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Court.CourtName)
             </td>
-            <td>
+            @*<td>
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>
