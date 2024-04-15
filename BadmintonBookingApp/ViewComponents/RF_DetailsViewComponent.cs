@@ -2,7 +2,9 @@
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Reservations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace BadmintonBookingApp.ViewComponents
 {
@@ -26,5 +28,6 @@ namespace BadmintonBookingApp.ViewComponents
         {
             return await _context.RF_Details.Include(p=>p.Reservation).Include(p=>p.Court).Where(p=>p.ReservationId==rev).ToListAsync();
         }
+        
     }
 }
