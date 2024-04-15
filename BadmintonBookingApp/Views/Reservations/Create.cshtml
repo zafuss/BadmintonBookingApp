@@ -1,45 +1,99 @@
-﻿@model BadmintonBookingApp.Models.Reservations.Reservation
+﻿@using BadmintonBookingApp.Models.User
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
+@model BadmintonBookingApp.Models.Reservations.Reservation
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_stolenLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<style>
 
-<h4>Reservation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="BookingDate" class="control-label"></label>
-                <input asp-for="BookingDate" type="date" class="form-control" />
-                <span asp-validation-for="BookingDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" type="time" min="06:00" max="21:00" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" type="time" min="07:00" max="22:00" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-       
+    input {
+        color-scheme: dark;
+    }
+</style>
+
+<img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
+<div class="vh-100 gradient-custom d-flex justify-content-center align-items-center">
+    <div class="card" style="background-color: #19283f; color: white; border-radius: 1rem; width: 1000px">
+        <div class="card-body text-center">
+
+            <h1 class="text-white mb-4">Create Reservation</h1>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Display email and phone number of the logged-in user -->
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    if (user != null)
+                    {
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <label class="form-label"><i class="fa fa-user"></i> FullName</label>
+                                <p class="text-white round-input">@user.FullName</p>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><i class="fa fa-envelope"></i> Email</label>
+                                <p class="text-white round-input">@user.Email</p>
+                            </div>
+                            <div class="col">
+                                <label class="form-label"><i class="fa fa-phone"></i> Phone number</label>
+                                <p class="text-white round-input">@user.PhoneNumber</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class="row justify-content-center">
+              
+                    <div class="col">
+                        <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column ;align-items:center">
+                            <label asp-for="BookingDate" class="form-label">Booking Date</label>
+                            <input asp-for="BookingDate" type="date" class="form-control round-input" style="max-width:250px; padding-right: 30px;" placeholder="Booking Date" onclick="openDatePicker()">
+                     
+                            <span asp-validation-for="BookingDate" class="text-danger"></span>
+                     
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column ;align-items:center">
+                            <label asp-for="StartTime" class="form-label">Start Time</label>
+                            <input asp-for="StartTime" type="time" min="06:00" max="21:00" class="form-control round-input" style="max-width:250px" placeholder="Start Time" onclick="openTimePicker()">
+                            <span asp-validation-for="StartTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column;align-items:center">
+                            <label asp-for="EndTime" class="form-label">End Time</label>
+                            <input asp-for="EndTime" type="time" min="07:00" max="22:00" class="form-control round-input" style="max-width:250px" placeholder="End Time" onclick="openTimePicker()">
+                            <span asp-validation-for="EndTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="align-items: end; display: flex">
+                    <button type="submit" class="btn rounded-pill main-btn" style="width:250px; margin-right: 28px; ">Create</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script>
+    function openDatePicker() {
+        console.log()
+        var datePicker = document.querySelector('input[type="date"]');
+        datePicker.click();
+    }
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    function openTimePicker() {
+        var timePicker = document.querySelector('input[type="time"]');
+        timePicker.click();
+    }
+</script>

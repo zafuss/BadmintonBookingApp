@@ -150,10 +150,19 @@
                             <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home", new {Area = ""})#services">Services</a>
                         </li>
                         <li class="nav-item">
+                            
                             <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court">Court</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                
+                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Create" asp-controller="Reservations">Reserve Courts</a>
+                            } else
+                            {
+                                
+                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login">Reserve Courts</a>
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link p-2  p-lg-3" href="#about">About</a>

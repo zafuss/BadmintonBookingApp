@@ -1,4 +1,4 @@
-.gradient-custom {
+﻿.gradient-custom {
     background-image: url(../imgs/login.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -23,8 +23,8 @@
 .round-input {
     border: 0;
     background: none;
-    display: block;
-    margin: 20px auto;
+    display: inline-block; /* Thay đổi từ display: block; thành display: inline-block; */
+    height: 50px;
     text-align: center;
     border: 2px solid #3498db;
     padding: 10px 10px;
@@ -32,8 +32,9 @@
     outline: none;
     color: white;
     border-radius: 24px;
-    transition: 0.25s
+    transition: 0.25s;
 }
+
 /*.gradient-custom input[type="email"]:hover,*/
 /*.gradient-custom input[type="password"]:hover*/
 .round-input:hover {

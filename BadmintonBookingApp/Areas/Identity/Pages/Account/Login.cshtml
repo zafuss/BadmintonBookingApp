@@ -23,17 +23,15 @@
                                     <p class="text-white-50 mb-5">Please enter your Email and Password!</p>
                                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-                                    <div class="form-outline form-white mb-4">
-                                     @*    <label class="form-label" for="typeEmailX">Email</label>
-                                        <input type="email" id="typeEmailX" required> *@
-                                        <label asp-for="Input.Email" class="form-label">Email</label>
+                                    <div class="form-outline form-white mb-4", style="display:flex; flex-direction: column; align-items:center">
+                                  
+                                        <label asp-for="Input.Email" class="form-label" style="margin-bottom:20px !important">Email</label>
                                         <input asp-for="Input.Email" class="form-control round-input" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                                     </div>
 
-                                    <div class="form-outline form-white mb-4">
-                                @*         <label class="form-label" for="typePasswordX">Password</label>
-                                        <input type="password" id="typePasswordX" required minlength="8"> *@
+                                    <div class="form-outline form-white mb-4" style="display:flex; flex-direction: column; align-items:center">
+          
                                         <label asp-for="Input.Password" class="form-label">Password</label>
                                         <input asp-for="Input.Password" class="form-control round-input" autocomplete="current-password" aria-required="true"  />
                                         <span asp-validation-for="Input.Password" class="text-danger"></span>
