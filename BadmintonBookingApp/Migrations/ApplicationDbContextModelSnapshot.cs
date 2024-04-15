@@ -70,8 +70,11 @@ namespace BadmintonBookingApp.Migrations
 
             modelBuilder.Entity("BadmintonBookingApp.Models.Managements.Price", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float>("DateFactor")
                         .HasColumnType("real");
@@ -180,8 +183,8 @@ namespace BadmintonBookingApp.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PriceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PriceId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
@@ -561,7 +564,9 @@ namespace BadmintonBookingApp.Migrations
 
                     b.HasOne("BadmintonBookingApp.Models.Managements.Price", "Price")
                         .WithMany("Reservations")
-                        .HasForeignKey("PriceId");
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
 

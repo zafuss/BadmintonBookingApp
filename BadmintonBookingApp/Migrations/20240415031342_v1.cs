@@ -71,7 +71,8 @@ namespace BadmintonBookingApp.Migrations
                 name: "Prices",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PriceTag = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     TimeFactor = table.Column<float>(type: "real", nullable: false),
                     DateFactor = table.Column<float>(type: "real", nullable: false),
@@ -92,7 +93,7 @@ namespace BadmintonBookingApp.Migrations
                     Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -259,8 +260,8 @@ namespace BadmintonBookingApp.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    PriceId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PriceId = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -275,7 +276,8 @@ namespace BadmintonBookingApp.Migrations
                         name: "FK_Reservations_Prices_PriceId",
                         column: x => x.PriceId,
                         principalTable: "Prices",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -341,7 +343,7 @@ namespace BadmintonBookingApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReservationId = table.Column<int>(type: "int", nullable: true),
                     CourtId = table.Column<int>(type: "int", nullable: true)
                 },

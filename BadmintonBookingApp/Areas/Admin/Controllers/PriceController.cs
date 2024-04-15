@@ -27,7 +27,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Price/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
@@ -87,7 +87,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,PriceTag,TimeFactor,DateFactor,Status")] Price price)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PriceTag,TimeFactor,DateFactor,Status")] Price price)
         {
             if (id != price.Id)
             {
@@ -118,7 +118,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Price/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -150,7 +150,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PriceExists(string id)
+        private bool PriceExists(int id)
         {
             return _context.Prices.Any(e => e.Id == id);
         }

@@ -72,15 +72,7 @@ namespace BadmintonBookingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BookingDate,StartTime,EndTime")] Reservation reservation)
         {
-            if(_context.Prices.FirstOrDefault() == null)
-            {
-                Price pr = new Price();
-                pr.Id = "abcdef";
-                pr.Status = 1;
-                pr.DateFactor = 1;
-                pr.TimeFactor = 1;
-                pr.PriceTag = 50000;
-            }
+       
             if (ModelState.IsValid)
             {
                 b = reservation.BookingDate;
