@@ -23,9 +23,9 @@ namespace BadmintonBookingApp.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IReservation _eFReservation;
         public static int CurrentRev;
-        static DateTime b;
-        static DateTime s;
-        static DateTime e;
+        public static DateTime b;
+        public static DateTime s;
+        public static DateTime e;
 
         public ReservationsController(ApplicationDbContext context, UserManager<AppUser> userManager, IReservation eFReservation)
         {
@@ -102,44 +102,12 @@ namespace BadmintonBookingApp.Controllers
                 _context.Reservations.Add(reservation);
                 await _context.SaveChangesAsync();
                 CurrentRev= reservation.Id;
-                return RedirectToAction("RFD");
+                return RedirectToAction("RFD","RF_Detail");
             }
             return View(reservation);
         }
         
-        public IActionResult RFD()
-        {
-            ViewBag.Rev = CurrentRev;
-            ViewBag.Court = new SelectList(_eFReservation.GetAllValidCourt(b,s,e), "Id","CourtName");
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RFD([Bind("Note,ReservationId,CourtId")] RF_Detail rf)
-        {
-            
-            if(ModelState.IsValid)
-            {
-                
-                rf.ReservationId = CurrentRev;
-                /* var listRFD = new List<RF_Detail>();
-                listRFD.Add(rf);
-                if (listRFD.Count > 3) ;*/
-                _context.RF_Details.Add(rf);
-                await _context.SaveChangesAsync();
-                ViewBag.Rev = CurrentRev;
-                ViewBag.Court = new SelectList(_eFReservation.GetAllValidCourt(b, s, e), "Id", "CourtName");
-                return View(rf);
-            }
-            ViewBag.Rev = CurrentRev;
-            ViewBag.Court = new SelectList(_eFReservation.GetAllValidCourt(b, s, e), "Id", "CourtName");
-            return RedirectToAction("RFD");
-        }
-        public IActionResult Finish()
-        {
-            var rf = _context.RF_Details.Where(p=>p.ReservationId == CurrentRev).Include(p=>p.Court).ToList();
-            return View(rf);
-        }
+        
         // GET: Reservations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
