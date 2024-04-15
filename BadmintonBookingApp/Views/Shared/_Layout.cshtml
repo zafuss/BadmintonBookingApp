@@ -32,13 +32,13 @@
             padding-top: 15px;
         }
 
-        .delete-details{
+        .delete-details {
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction:column;
+            flex-direction: column;
             padding-top: 15px;
-            text-align:center;
+            text-align: center;
         }
     </style>
 </head>
@@ -56,11 +56,11 @@
                     <i class='bx bx-menu' id="btn"></i>
                 </div>
                 <ul class="nav-list" style="padding:initial">
-                    <li>
-                        <i class='bx bx-search'></i>
-                        <input type="text" placeholder="Search...">
-                        <span class="tooltip">Search</span>
-                    </li>
+                    @* <li>
+            <i class='bx bx-search'></i>
+            <input type="text" placeholder="Search...">
+            <span class="tooltip">Search</span>
+            </li> *@
                     <li>
                         <a asp-area="" asp-action="Index" asp-controller="Court">
                             <i class='bx bx-grid-alt'></i>
@@ -69,7 +69,7 @@
                         <span class="tooltip">Court</span>
                     </li>
                     <li>
-                        <a asp-area ="" asp-action="Index" asp-controller="Reservation">
+                        <a asp-area="" asp-action="Index" asp-controller="Reservation">
                             <i class='bx bx-user'></i>
                             <span class="links-name">Reservation</span>
                         </a>
@@ -83,7 +83,7 @@
                         <span class="tooltip">Services</span>
                     </li>
                     <li>
-                    <a asp-area="Admin" asp-action="Index" asp-controller="Price">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Price">
                             <i class='bx bx-pie-chart-alt-2'></i>
                             <span class="links-name">Price</span>
                         </a>
@@ -96,36 +96,36 @@
                         </a>
                         <span class="tooltip">User</span>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-cart-alt'></i>
-                            <span class="links-name">Order</span>
-                        </a>
-                        <span class="tooltip">Order</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-heart'></i>
-                            <span class="links-name">Saved</span>
-                        </a>
-                        <span class="tooltip">Saved</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-cog'></i>
-                            <span class="links-name">Setting</span>
-                        </a>
-                        <span class="tooltip">Setting</span>
-                    </li>
+                    @* <li>
+            <a href="#">
+            <i class='bx bx-cart-alt'></i>
+            <span class="links-name">Order</span>
+            </a>
+            <span class="tooltip">Order</span>
+            </li>
+            <li>
+            <a href="#">
+            <i class='bx bx-heart'></i>
+            <span class="links-name">Saved</span>
+            </a>
+            <span class="tooltip">Saved</span>
+            </li>
+            <li>
+            <a href="#">
+            <i class='bx bx-cog'></i>
+            <span class="links-name">Setting</span>
+            </a>
+            <span class="tooltip">Setting</span>
+            </li> *@
                     <li class="profile">
                         <div class="profile-details">
                             <img src="~/images/logo/logo_light.png">
                             <div class="name-job">
-                                <div class="name">Trinhhh</div>
+                                <div class="name">@User.Identity.Name</div>
                                 <div class="job">Admin</div>
                             </div>
                         </div>
-                        <i class='bx bx-log-out' id="log-out"></i>
+                        <a asp-area="Identity" asp-page="/Account/Logout"><i class='bx bx-log-out' id="log-out"></i></a>
                     </li>
                 </ul>
             </div>
@@ -133,60 +133,39 @@
         }
     }
     <section id="MyElement">
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
                 <a class="navbar-brand" href="@Url.Action("Index", "Home",new {Area = ""})#tm-video-container">
-                <img style="width: 150px" src="~/images/logo/badminton_logo_light.png" alt="">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="main">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                    <img style="width: 150px" src="~/images/logo/badminton_logo_light.png" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="main" style="background: #19283F">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
                             <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="@Url.Action("Index", "Home", new { Area = "" })#tm-video-container">Home</a>
-                </li>
-                <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home", new {Area = ""})#services" >Services</a>
-                </li>
-                <li class="nav-item">
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home", new {Area = ""})#services">Services</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court">Court</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link p-2  p-lg-3" href="#about">About</a>
-                </li>
-     
-            </ul>
-            <div class="search ps-3 pe-3 d-none d-lg-block">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        @*      </div>
-                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
-            </div> *@
-            </div>
-            <partial name="_LoginPartial" />
-     </nav>
-   @*  <div class="landing d-flex justify-content-center align-items-center" id="tm-video-container">
-        <video autoplay muted loop  style="left: 50%;
-                    min-height: 100%;
-                    min-width: 100%;
-                    position: absolute;
-                    top: 50%;
-                    transform: translate(-50%, -50%);">
-            <source src="~/vids/ASTROX, Yonex's Latest Badminton Racquet.mp4" type="video/mp4">
-        </video>
-        @* <form class="d-flex position-absolute tm-search-form">
-            @* <div class="text-center text-light">
-                <h1 class="text-info">Welcome To Our Hotel</h1>
-                <p class="fs-6  mb-5 text-body-tertiary">We promise you to have a great vaccation</p>
-                <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
-            </div> 
-        </form> 
-    </div> *@
-    
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2  p-lg-3" href="#about">About</a>
+                        </li>
+
+                    </ul>
+                    <div class="search ps-3 pe-3 d-none d-lg-block">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <partial name="_LoginPartial" />
+        </nav>
+
         <div>
             <main role="main" class="pb-3">
                 @RenderBody()
@@ -206,8 +185,8 @@
                                 convallis at tellus.
                             </p>
                             <div class="copyright">
-                                Created By <span>ABMteam</span>
-                                <div>&copy; 2023 - <span>Hotel Inc</span></div>
+                                Created By <span>TODteam</span>
+                                <div>&copy; 2023 - <span>Badminton Inc</span></div>
                             </div>
                         </div>
                     </div>
@@ -240,7 +219,7 @@
                             <h5 class="text-light">Contact Us</h5>
                             <p class="lh-lg mt-3 mb-5">Get in touch with us via mail phone.We are waiting for your call or message</p>
                             <a class="btn rounded-pill main-btn w-100" href="#">
-                                ABMteam@gmail.com
+                                todreamscompany@gmail.com
                             </a>
                             <ul class="d-flex mt-5 list-unstyled gap-3">
                                 <li>
