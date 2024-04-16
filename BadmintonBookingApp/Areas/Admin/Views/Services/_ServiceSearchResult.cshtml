@@ -1,0 +1,97 @@
+﻿@using BadmintonBookingApp.Models.Padding
+@using BadmintonBookingApp.Models.Facilities
+@model PaginatedList<BadmintonBookingApp.Models.Services.Service>
+
+@{
+    ViewData["Title"] = "_ServiceSearchResult";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ServiceName
+            </th>
+            <th
+                Unit
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+               Status
+            </th>
+            <th>
+                Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Status.GetValue(item.Status, Status.serviceDictionary)
+                </td>
+                <td>
+                    <img src="~/@item.ImageUrl" style="width:150px" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= @Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == @Model.PageIndex ?"active" : "")">
+                    <a class="page-link" onclick="test(@i)">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
+<script>
+    function test(number) {
+        var query = $("#search-input").val();
+        query = query.trim();
+        $.ajax({
+            url: "@Url.Action("SearchServices", "Services", new { Area = "Admin" })",
+            data: { query: query, pageNumber: number },
+            type: "Post",
+            success: function (result) {
+                $("#itemlist").html("");
+                $("#itemlist").html(result);
+            },
+            error: function (result) {
+                window.alert("This is an unhandled exception. ");
+            }
+        });
+    }
+</script>

@@ -1,16 +1,30 @@
-﻿@using BadmintonBookingApp.Models.Facilities
-@model IEnumerable<BadmintonBookingApp.Models.Services.Service>
+﻿@using BadmintonBookingApp.Models.Padding
+@model PaginatedList<BadmintonBookingApp.Models.Services.Service>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="create">create new</a>
 </p>
-<table class="table">
+<form class="d-flex position-absolute tm-search-form dropdown" method="get" id="search-form">
+    <div>
+        <input class="form-control tm-search-input" name="query" id="search-input" type="text" placeholder="Search" aria-label="Search">
+            <div id="search-results" class="dropdown-content">
+        </div>
+    </div>
+
+    <button class="btn btn-outline-success tm-search-btn" type="button" value="Search" id="addBtn" >
+        <i class="fas fa-search"></i>
+    </button>
+</form>
+
+<div id="itemlist">
+    <partial name="_ServiceSearchResult" model="@Model" />
+</div>
+
+@* <table class="table">
     <thead>
         <tr>
             <th>
@@ -63,4 +77,27 @@
         </tr>
 }
     </tbody>
-</table>
+</table>  *@
+@section Scripts {
+    <script>
+        $(function () {
+            $("#addBtn").click(function () {
+                var query = $("#search-input").val();
+                query = query.trim();
+                $.ajax({
+                    url: "@Url.Action("SearchServices", "Services", new {Area = "Admin"})",
+                    data: { query: query },
+                    type: "Post",
+                    success: function (result) {
+                        $("#itemlist").html("");
+                        $("#itemlist").html(result);
+                    },
+                    error: function (result) {
+                        window.alert("This is an unhandled exception. ");
+                    }
+                });
+            });
+        });
+
+    </script>
+}

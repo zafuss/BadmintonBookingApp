@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using BadmintonBookingApp.Models.Facilities;
 using Microsoft.IdentityModel.Tokens;
+using BadmintonBookingApp.Models.Padding;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
@@ -28,9 +30,24 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Services
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            return View(await _context.Services.ToListAsync());
+            int pageSize = 10;
+            //         if (Test == null)
+            //{
+            //             IQueryable<Product> productsQuery = _context.Products.Include(p => p.Category);
+            //             var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery, pageNumber, pageSize);
+            //             return View(paginatedProducts);
+            //         }
+            //         else
+            //         {
+            //             IQueryable<Product> productsQuery = _context.Products.Include(p => p.Category).Where(p => p.Name.Contains(Test));
+            //             var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery, pageNumber, 10);
+            //             return View(paginatedProducts);
+            //         }
+            IQueryable<Service> servicesQuery = _context.Services;
+            var paginatedProducts = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, pageSize);
+            return View(paginatedProducts);
         }
 
         // GET: Admin/Services/Details/5
@@ -190,6 +207,23 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
         private bool ServiceExists(int id)
         {
             return _context.Services.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> SearchServices(string query, int pageNumber = 1)
+        {
+            IQueryable<Service> servicesQuery;
+
+            if (string.IsNullOrEmpty(query))
+            {
+                servicesQuery = _context.Services;
+            }
+            else
+            {
+                servicesQuery = _context.Services.Where(p => p.ServiceName.Contains(query));
+
+            }
+            var paginatedProducts = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 10);
+            return PartialView("_ServiceSearchResult", paginatedProducts);
         }
     }
 }
