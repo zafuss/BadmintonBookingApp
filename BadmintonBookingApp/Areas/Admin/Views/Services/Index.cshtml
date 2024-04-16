@@ -8,17 +8,20 @@
 <p>
     <a class="btn btn-primary" asp-action="create">create new</a>
 </p>
-<form class="d-flex position-absolute tm-search-form dropdown" method="get" id="search-form">
-    <div>
-        <input class="form-control tm-search-input" name="query" id="search-input" type="text" placeholder="Search" aria-label="Search">
+<div>
+    <form class="d-flex  tm-search-form dropdown" method="get" id="search-form">
+        <div>
+            <input class="form-control tm-search-input" name="query" id="search-input" type="text" placeholder="Search" aria-label="Search">
             <div id="search-results" class="dropdown-content">
+            </div>
         </div>
-    </div>
 
-    <button class="btn btn-outline-success tm-search-btn" type="button" value="Search" id="addBtn" >
-        <i class="fas fa-search"></i>
-    </button>
-</form>
+        <button class="btn btn-outline-success tm-search-btn" type="button" value="Search" id="addBtn">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
+
 
 <div id="itemlist">
     <partial name="_ServiceSearchResult" model="@Model" />
