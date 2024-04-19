@@ -600,7 +600,7 @@ select:not([multiple]) {
     background-image: url(../img/select-arrow.png);
     padding: 14px 20px;
     padding-right: 20px;
-    color: #666;
+    /*color: #666;*/
 }
 
 .mapouter {

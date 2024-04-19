@@ -1,45 +1,64 @@
 ﻿@model IEnumerable<BadmintonBookingApp.Models.Reservations.RF_Detail>
 
 @{
-    ViewData["Title"] = "Default";
+    ViewData["Title"] = "Selected court(s)";
 }
 
-<h1>Default</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Court)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReservationId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Court.CourtName)
-            </td>
-            <td>
-                <a asp-controller="RF_Detail" asp-action="Remove" asp-route-id="@item.Id">Remove</a>
-            </td>
-        </tr>
+
+@if (Model.Count() != 0)
+{
+
+    <div class="gradient-custom d-flex justify-content-center align-items-center">
+
+    <div class="card " style="background-color: #19283f; color: white; border-radius: 1rem; width: 800px; padding: 20px">
+        <div class="card-body text-center">
+                <h1 style="color: white;">Selected court(s)</h1>
+            <table class="table">
+                <thead>
+                    <tr style="color: white;">
+
+                   
+                        <th>
+                            @Html.DisplayNameFor(model => model.Court)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Note)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="color: white;">
+
+                       
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Court.CourtName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            <td>
+                                <a asp-controller="RF_Detail" asp-action="Remove" asp-route-id="@item.Id" style="color: red;">Remove</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+    <form asp-area="" asp-action="Finish" asp-controller="RF_Detail" method="post">
+        <div class="form-group" style="align-items: end; display: flex">
+            <button type="submit" class="btn rounded-pill main-btn" style="width:250px;">Finish</button>
+        </div>
+    </form>
+        </div>
+    </div>
+    </div>
+} else
+{
+    
 }
-    </tbody>
-</table>
+

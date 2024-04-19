@@ -3,34 +3,50 @@
 @{
     ViewData["Title"] = "Finish";
 }
+<img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
+<div class="gradient-custom d-flex justify-content-center align-items-center" style="padding-top: 100px">
+    <div class="card" style="background-color: #19283f; color: white; border-radius: 1rem; width: 800px; padding: 20px;">
+        <div class="card-body text-center">
+            <h1>Thanks for choosing our services!</h1>
+            <div style="padding-top: 30px; padding-bottom: 30px">
 
-<h1>Finish</h1>
+            <h5 style="text-align: left;">Your booking information:</h5>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Court.CourtName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Court.CourtName)
-            </td>
-            @*<td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
-        </tr>
-}
-    </tbody>
-</table>
+
+            </div>
+
+            <table class="table" style="color: white;">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Court.CourtName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Note)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Court.CourtName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            <td>
+                                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -2,40 +2,52 @@
 
 @{
     ViewData["Title"] = "RFD";
-
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Sử dụng layout chung nếu có
 }
 
-<h1>RFD</h1>
+<style>
+    input {
+        color-scheme: dark;
+    }
+</style>
 
-<h4>RF_Detail </h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="RFD">
-            <div class="form-control">
-                <label asp-for="CourtId" class="control-label"></label>
-                <select asp-for="CourtId" class="form-control" asp-items="ViewBag.Court"></select>
-            </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="RFD" class="btn btn-primary"/>
-            </div>
-        </form>
-        @await Component.InvokeAsync("RF_Details")
-        @*@<vc:RF_Details rev=@a></vc:RF_Details>*@
-        <a asp-area="" asp-action="Finish" asp-controller="RF_Detail">Finish</a>
+<img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
+<div class=" gradient-custom d-flex justify-content-center align-items-center" style="padding-top: 50px; padding-bottom: 30px">
+    <div class="card" style="background-color: #19283f; color: white; border-radius: 1rem; width: 800px; padding: 20px">
+        <div class="card-body text-center">
+
+            <h1 class="text-white mb-4">Choose Court(s)</h1>
+            <form asp-action="RFD">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column">
+                    <label asp-for="CourtId" class="form-label">Court</label>
+                    <select asp-for="CourtId" class="form-control round-input selectBox" asp-items="ViewBag.Court"></select>
+                </div>
+                <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column">
+                    <label asp-for="Note" class="form-label">Note</label>
+                    <input asp-for="Note" class="form-control round-input"  />
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" style="align-items: end; display: flex">
+                    <button type="submit" class="btn rounded-pill main-btn" style="width:250px;  ">Add</button>
+                </div>
+            </form>
+
+           
+
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@await Component.InvokeAsync("RF_Details")
+<!-- <vc:RF_Details rev=a></vc:RF_Details> -->
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
