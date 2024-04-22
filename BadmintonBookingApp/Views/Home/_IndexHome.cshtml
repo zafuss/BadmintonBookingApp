@@ -1,0 +1,170 @@
+﻿@model BadmintonBookingApp.Models.UserModel
+@using BadmintonBookingApp.Models.Padding
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="our-work text-center pt-5 pb-5" id="services" style="position:relative">
+    <div class="container" >
+        <div class="main-title mt-5 mb-5 position-relative">
+            <img class="mb-4" src="imgs/title.png" alt="" />
+            <h2>We Serve This</h2>
+            <p class="text-black-50 text-uppercase">Prepare To Be Amazed</p>
+        </div>
+        <div class="row" >
+            @foreach (var service in @Model.services)
+            {
+                if (@service.Status != 0)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="box" data-work="@service.ServiceName">
+                            <img class="img-fluid" src="@service.ImageUrl" alt="" />
+                        </div>
+                    </div>
+                }
+
+            }
+            
+        </div>
+        
+    </div>
+        <button id="prev" onclick="prev(@Model.services.PageIndex)"> &lt; </button>
+        <button id="next" onclick="next(@Model.services.PageIndex)"> &gt; </button>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination"">
+                <div class="dot-border">
+                    @for (int i = 1; i <= @Model.services.TotalPages; i++)
+                    {
+                        <button onclick="test(@i)" style="background-color:@(i == @Model.services.PageIndex ? "#8052ec" : "transparent")"></button>
+                    }
+                 </div>
+            </ul>
+        </nav>
+
+    </div>
+
+</div>
+
+<div class="our-work text-center pt-5 pb-5" id="court">
+    <div class="container">
+        <div class="main-title mt-5 mb-5 position-relative">
+            <img class="mb-4" src="imgs/title.png" alt="" />
+            <h2>Court in our station</h2>
+            <p class="text-black-50 text-uppercase">Prepare To Be Amazed</p>
+        </div>
+        <div class="row tm-mb-90 tm-gallery">
+            @foreach (var court in @Model.courts)
+            {
+                if (court.Status != 0)
+                {
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                        <figure class="effect-ming tm-video-item">
+                            <img src="~/images/court/court.jpg" alt="Image" class="img-fluid">
+                            <figcaption class="d-flex align-items-center justify-content-center">
+                                <h2>@court.CourtName</h2>
+                                <a asp-action="Display" asp-route-id="@court.Id">View</a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                }
+
+            }
+        </div>
+
+    </div>
+    <div class="team text-center pb-5 pt-5">
+        <div class="container pb-5 pt-5">
+            <h2 class="fw-bold">Meet The Team</h2>
+            <p class="text-black-50 mb-5">
+                We hope You enjoyed
+            </p>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="box bg-white">
+                        @* <img class="img-fluid" src="imgs/palastane.png" alt="" /> *@
+                        <h4 class="p-3 text-light">Zafuss</h4>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="box bg-white">
+                        @* <img class="img-fluid" src="imgs/emad1.jpg" alt="" /> *@
+                        <h4 class="p-3 text-light">Antony Nguyen</h4>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="box bg-white">
+                        @* <img class="img-fluid" src="imgs/atiah11.jpg" alt="" /> *@
+                        <h4 class="p-3 text-light">Cau Vang</h4>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="box bg-white">
+                        @* <img class="img-fluid" src="imgs/basel.jpg" alt="" /> *@
+                        <h4 class="p-3 text-light">Father</h4>
+
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+<script>
+    function test(number) {
+        $.ajax({
+            url: "@Url.Action("IndexHome", "Home")",
+            data: {pageNumber: number},
+            type: "Post",
+            success: function (result) {
+                $("#itemlist").html("");
+                $("#itemlist").html(result);
+            },
+            error: function (result) {
+                window.alert("This is an unhandled exception. ");
+            }
+        });
+    }
+    function next(index) {
+        if (index + 1 > @Model.services.TotalPages) {
+            index = 1;
+        }
+        else {
+            index = index + 1;
+        }
+            $.ajax({
+                url: "@Url.Action("IndexHome", "Home")",
+                data: { pageNumber: index },
+                type: "Post",
+                success: function (result) {
+                    $("#itemlist").html("");
+                    $("#itemlist").html(result);
+                },
+                error: function (result) {
+                    window.alert("This is an unhandled exception. ");
+                }
+            });
+    }
+     function prev(index) {
+            if (index == 1) {
+                index = @Model.services.TotalPages;
+            }
+            else {
+                index = index - 1;
+            }
+            $.ajax({
+                url: "@Url.Action("IndexHome", "Home")",
+                data: { pageNumber: index },
+                type: "Post",
+                success: function (result) {
+                    $("#itemlist").html("");
+                    $("#itemlist").html(result);
+                },
+                error: function (result) {
+                    window.alert("This is an unhandled exception. ");
+                }
+            });
+        }
+</script>

@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using BadmintonBookingApp.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BadmintonBookingApp.Models.Services;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using BadmintonBookingApp.Models.Padding;
 
 namespace BadmintonBookingApp.Controllers
 {
@@ -19,13 +23,26 @@ namespace BadmintonBookingApp.Controllers
             _courtRepository = courtRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
             //var services = await _serviceRepository.GetAllAsync();
-            UserModel _userModel = new UserModel(await _serviceRepository.GetAllAsync(), await _courtRepository.GetAllAsync());
+            IQueryable<Service> servicesQuery;
+            servicesQuery = await _serviceRepository.GetServices();
+            var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 9);
+            UserModel _userModel = new UserModel(paginatedServices, await _courtRepository.GetAllAsync());
+
             return View(_userModel);
         }
 
+        public async Task<IActionResult> IndexHome(int pageNumber = 1)
+        {
+            IQueryable<Service> servicesQuery;
+            servicesQuery = await _serviceRepository.GetServices();
+            var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 9);
+            UserModel _userModel = new UserModel(paginatedServices, await _courtRepository.GetAllAsync());
+
+            return PartialView("_IndexHome", _userModel);
+        }
         public IActionResult Privacy()
         {
             return View();

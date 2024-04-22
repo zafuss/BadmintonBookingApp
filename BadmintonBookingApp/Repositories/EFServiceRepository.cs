@@ -16,6 +16,11 @@ namespace BadmintonBookingApp.Repositories
         {
             return await _context.Services.ToListAsync();
         }
+
+        public async Task<IQueryable<Service>> GetServices()
+        {
+            return _context.Services;
+        }
         public async Task<Service> GetByIdAsync(int id)
         {
             return await _context.Services.FindAsync(id);
