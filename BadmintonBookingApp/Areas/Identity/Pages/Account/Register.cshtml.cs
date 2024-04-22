@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using BadmintonBookingApp.Helpers;
 
 namespace BadmintonBookingApp.Areas.Identity.Pages.Account
 {
@@ -102,6 +103,9 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
             public string FullName { get; set; }
+
+            [RegularExpression(@"^(?=\d{10,11}$)(0[1-9]\d{8,9})$", ErrorMessage = "Invalid phone number.")]
+            public string PhoneNumber { get; set; }
         }
 
 
@@ -119,6 +123,7 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.FullName = Input.FullName;
+                user.PhoneNumber = Input.PhoneNumber;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -138,23 +143,35 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
+                        "/EmailConfirmed",
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    var encodedUrl = HtmlEncoder.Default.Encode(callbackUrl);
+                    var emailBody = $@"<html>
+                                    <body>
+                                        <p>Welcome to TOD Badminton!</p>
+                                        <p>Please confirm your account by clicking the button below:</p>
+                                        <a href='{encodedUrl}' style='display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;'>Click Here</a>.
+                                    </body>
+                                    </html>";
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    SendMail.SendEmail(Input.Email, "Confirm your email", emailBody, "");
+
+                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //{
+                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    //}
+                    //else
+                    //{
+                    //    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //    return LocalRedirect(returnUrl);
+                    //}
+                    
+                    return RedirectToPage("/RequestConfirmEmail", new { email = Input.Email, returnUrl = returnUrl });
                 }
                 foreach (var error in result.Errors)
                 {
