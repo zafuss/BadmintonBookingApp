@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
     <title>@ViewData["Title"] - BadmintonBookingApp</title>
     <link rel="stylesheet" href="~/css/all.min.css">
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
@@ -18,8 +18,9 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    
     <style>
         .form-group {
             display: flex;
@@ -40,6 +41,9 @@
             flex-direction: column;
             padding-top: 15px;
             text-align: center;
+        }
+        .layout-CSS{
+            display:none;
         }
     </style>
 </head>
@@ -157,7 +161,6 @@
                         <li class="nav-item">
                             @if(User.Identity.IsAuthenticated)
                             {
-                                
                                 <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Create" asp-controller="Reservations">Reserve Courts</a>
                             } else
                             {
@@ -165,10 +168,6 @@
                                 <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login">Reserve Courts</a>
                             }
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2  p-lg-3" href="#about">About</a>
-                        </li>
-
                     </ul>
                     <div class="search ps-3 pe-3 d-none d-lg-block">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -177,13 +176,13 @@
         </nav>
 
         <div>
-            <main role="main" class="pb-3">
-                    @RenderBody()
+            <main role="main">
+                @RenderBody()
              </main>
         </div>
     </section>
 
-    <footer class="border-top footer text-muted">
+    <footer class="@((ViewBag.CurrentPageName ?? "Unknown") == "HomePage" ? "border-top footer text-muted" : "layout-CSS")">
         <div class="footer pt-5 pb-5 text-white-50 text-center text-md-start">
             <div class="container">
                 <div class="row">
@@ -322,9 +321,9 @@
     <script>
         var nameClass = document.getElementById("hiddenA").value;
         document.getElementById("MyElement").className = nameClass;
-        //alert(nameClass);
+        // alert(nameClass);
+        
     </script>
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
 </html>

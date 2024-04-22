@@ -30,7 +30,7 @@ namespace BadmintonBookingApp.Controllers
             servicesQuery = await _serviceRepository.GetServices();
             var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 9);
             UserModel _userModel = new UserModel(paginatedServices, await _courtRepository.GetAllAsync());
-
+            ViewBag.CurrentPageName = "HomePage";
             return View(_userModel);
         }
 

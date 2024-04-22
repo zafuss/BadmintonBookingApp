@@ -20,3 +20,4 @@ function menuBtnChange() {
    btn.classList.replace("bx-menu-alt-right","bx-menu");
  }
 }
+

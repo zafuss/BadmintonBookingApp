@@ -2,9 +2,9 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    Layout = "~/Views/Shared/_stolenLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
+<img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%;height:100%">
 <div class="vh-100 gradient-custom">
     <div class="container py-5 h-100 opacity-80  ">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -23,14 +23,14 @@
                                 <div class="form-outline form-white mb-4" , style="display:flex; flex-direction: column; align-items:center">
 
                                     <label asp-for="Input.Email" class="form-label" style="margin-bottom:20px !important">Email</label>
-                                    <input asp-for="Input.Email" class="form-control round-input" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <input asp-for="Input.Email" class="form-control round-input" style="width:250px" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                                 </div>
                                 
                                 <div class="form-outline form-white mb-4" , style="display:flex; flex-direction: column; align-items:center">
 
                                     <label asp-for="Input.FullName" class="form-label" style="margin-bottom:20px !important">Full name</label>
-                                    <input asp-for="Input.FullName" class="form-control round-input" autocomplete="fullname" aria-required="true"  />
+                                    <input asp-for="Input.FullName" class="form-control round-input" style="width:250px" autocomplete="fullname" aria-required="true" />
                                     <span asp-validation-for="Input.FullName" class="text-danger"></span>
                                 </div>
 
