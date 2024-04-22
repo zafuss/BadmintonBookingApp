@@ -50,7 +50,7 @@ color: var(--green-color);
     color: var(--green-color);
 }
 .landing{
-   background-image: url(../imgs/Hotel.jpg);
+/*   background-image: url(../imgs/Hotel.jpg);*/
    background-size:100% 100%;
     min-height: calc(100vh - 72px);
 }

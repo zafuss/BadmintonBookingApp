@@ -57,15 +57,10 @@
             <div class="sidebar">
                 <div class="logo-details">
                     <i class='bx bxl-c-plus-plus icon'></i>
-                    <div class="logo-name">CodingLab</div>
+                    <div class="logo-name">Badminton</div>
                     <i class='bx bx-menu' id="btn"></i>
                 </div>
                 <ul class="nav-list" style="padding:initial">
-                    @* <li>
-            <i class='bx bx-search'></i>
-            <input type="text" placeholder="Search...">
-            <span class="tooltip">Search</span>
-            </li> *@
                     <li>
                         <a asp-area="" asp-action="Index" asp-controller="Court">
                             <i class='bx bx-grid-alt'></i>
@@ -101,6 +96,7 @@
                         </a>
                         <span class="tooltip">User</span>
                     </li>
+
                     @* <li>
             <a href="#">
             <i class='bx bx-cart-alt'></i>
@@ -124,13 +120,13 @@
             </li> *@
                     <li class="profile">
                         <div class="profile-details">
-                            <img src="~/images/logo/logo_light.png">
+                            @* <img style="width: 110px"  src="~/images/logo/badminton_logo_light.png"> *@
                             <div class="name-job">
                                 <div class="name">@User.Identity.Name</div>
                                 <div class="job">Admin</div>
                             </div>
+                            <a asp-area="Identity" asp-page="/Account/Logout"><i class='bx bx-log-out' id="log-out"></i></a>
                         </div>
-                        <a asp-area="Identity" asp-page="/Account/Logout"><i class='bx bx-log-out' id="log-out"></i></a>
                     </li>
                 </ul>
             </div>
@@ -188,7 +184,7 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-4">
                         <div class="info mb-5">
-                            <img src="imgs/logo.png" alt="" class="mb-4" />
+                            <img style="width: 150px" src="~/images/logo/badminton_logo_light.png" alt="" class="mb-4" />
                             <p class="mb-5">
                                 Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed,
                                 convallis at tellus.
@@ -258,7 +254,7 @@
             </div>
         </div>
     </footer>
-    <script src="js/plugins.js"></script>
+    <script src="~/js/plugins.js"></script>
     <script>
         $(window).on("load", function () {
             $('body').addClass('loaded');
@@ -315,9 +311,10 @@
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="~/js/all.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/Script.js"></script>
+    @* <script src="~/js/Script.js"></script>  *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"> </script>
+    <script src="~/js/wy.js"></script>
     <script>
         var nameClass = document.getElementById("hiddenA").value;
         document.getElementById("MyElement").className = nameClass;
