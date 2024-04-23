@@ -84,6 +84,7 @@ namespace BadmintonBookingApp.Controllers
                 e = reservation.EndTime;
                 if (!_eFReservation.TimeIsValid(reservation.BookingDate,reservation.StartTime,reservation.EndTime))
                 {
+                    ViewBag.Message = string.Format("Time is not valid");
                     return View(reservation);
                 }
                 reservation.Price = _context.Prices.FirstOrDefault();
@@ -187,6 +188,15 @@ namespace BadmintonBookingApp.Controllers
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> Cancel()
+        {
+            var reservation = await _context.Reservations.FindAsync(CurrentRev);
+            if(reservation != null)
+                _context.Reservations.Remove(reservation);
+            CurrentRev = -1;
+            return RedirectToAction("Create");
         }
     }
 }

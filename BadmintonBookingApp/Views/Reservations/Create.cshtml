@@ -82,6 +82,14 @@
                     <button type="submit" class="btn rounded-pill main-btn" style="width:250px; margin-right: 28px; ">Create</button>
                 </div>
             </form>
+            @if (ViewBag.Message != null)
+            {
+                <script type="text/javascript">
+                    window.onload = function () {
+                        alert("@ViewBag.Message");
+                    };
+                </script>
+            }
 
         </div>
     </div>
