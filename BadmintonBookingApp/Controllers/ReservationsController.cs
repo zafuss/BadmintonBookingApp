@@ -37,7 +37,10 @@ namespace BadmintonBookingApp.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reservations.ToListAsync());
+            if(User.IsInRole("Admin"))
+                return View(await _context.Reservations.OrderByDescending(p=>p.BookingDate).ToListAsync());
+            var uid= User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(await _context.Reservations.OrderByDescending(p => p.BookingDate).Where(p => p.UserId == uid).ToListAsync());
         }
 
         // GET: Reservations/Details/5
