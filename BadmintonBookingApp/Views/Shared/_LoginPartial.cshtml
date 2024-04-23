@@ -2,18 +2,64 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
+<style>
 
+
+    .border-btn {
+        border: 0;
+        background: none;
+        display: inline-block; /* Thay đổi từ display: block; thành display: inline-block; */
+
+        text-align: center;
+        border: 2px solid #3498db;
+        padding: 10px 10px;
+        max-width: 450px;
+        outline: none;
+        color: white;
+        border-radius: 24px !important;
+        transition: 0.25s;
+    }
+
+</style>
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" onclick="Change()">Hello @User.Identity?.Name!</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" onclick="Change()">
-                <button type="submit" class="btn  rounded-pill main-btn">Logout</button>
-            </form>
-        </li>
+        <ul class="navbar-nav">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li class="nav-item dropdown">
+                    <button class="nav-link dropdown-toggle border-btn" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @User.Identity?.Name!
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve History</a>
+                        </li>
+                        <li>
+                            <hr style="margin-left:16px;">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change password</a>
+                        </li>
+                        <li>
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+
+
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <div>
+                    <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Login</a>
+                    <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register" onclick="Change()">Register</a>
+                </div>
+            }
+        </ul>
+
     }
     else
     {

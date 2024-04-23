@@ -23,6 +23,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Open+Sans:wght@400;700&family=Roboto:wght@100;300;500&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        a.btn.rounded-pill.main-btn {
+            margin-top: 8px;
+        }
+        .navbar-nav-horizontal {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin-right: 10px; /* Khoảng cách giữa các mục */
+        }
+
         .form-group {
             display: flex;
             flex-direction: column;
@@ -147,6 +159,17 @@
                 <div class="collapse navbar-collapse" id="main" style="background: #19283F">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class=" btn rounded-pill main-btn" asp-area="" asp-action="Create" asp-controller="Reservations" onclick="Change()">Reserve Courts Now</a>
+                            }
+                            else
+                            {
+
+                                <a class="btn rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Reserve Courts Now</a>
+                            }
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="@Url.Action("Index", "Home", new { Area = "" })#tm-video-container" onclick="Change()">Home</a>
                         </li>
                         <li class="nav-item">
@@ -156,27 +179,8 @@
                             
                             <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court" onclick="Change()">Court</a>
                         </li>
-                        <li class="nav-item">
-                            @if(User.Identity.IsAuthenticated)
-                            {
-                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Create" asp-controller="Reservations" onclick="Change()">Reserve Courts</a>
-                            } else
-                            {
-
-                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Reserve Courts</a>
-                            }
-                        </li>
-                        <li class="nav-item">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve History</a>
-                            }
-                            else
-                            {
-
-                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login">Reserve History</a>
-                            }
-                        </li>
+                      
+                   
 
                     </ul>
                     <div class="search ps-3 pe-3 d-none d-lg-block">

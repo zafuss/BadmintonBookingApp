@@ -122,23 +122,54 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 var currentUser = await _context.Users.Where((e) => e.Email == Input.Email).FirstOrDefaultAsync();
-                if (!currentUser.EmailConfirmed)
-                {
-                    var userId = await _userManager.GetUserIdAsync(currentUser);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(currentUser);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
 
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                    var encodedUrl = HtmlEncoder.Default.Encode(callbackUrl);
-                    var emailBody = $@"<html>
+                if (currentUser != null)
+                {
+                    if (currentUser.Status == 0)
+                    {
+                        ModelState.AddModelError(string.Empty, "Your account has been disabled.");
+                        return Page();
+                    }
+                    if (currentUser.EmailConfirmed)
+                    {
+                    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                        if (result.Succeeded)
+                        {
+                            _logger.LogInformation("User logged in.");
+                            return LocalRedirect(returnUrl);
+                        }
+                        if (result.RequiresTwoFactor)
+                        {
+                            return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                        }
+                        if (result.IsLockedOut)
+                        {
+                            _logger.LogWarning("User account locked out.");
+                            return RedirectToPage("./Lockout");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                            return Page();
+                        }
+                    }
+                    else
+                    {
+
+                        var userId = await _userManager.GetUserIdAsync(currentUser);
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(currentUser);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        var encodedUrl = HtmlEncoder.Default.Encode(callbackUrl);
+                        var emailBody = $@"<html>
                                     <body>
                                         <p>Welcome to TOD Badminton!</p>
                                         <p>Please confirm your account by clicking the button below:</p>
@@ -146,37 +177,17 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
                                     </body>
                                     </html>";
 
-                    SendMail.SendEmail(Input.Email, "Confirm your email", emailBody, "");
-                    ModelState.AddModelError(string.Empty, "We've just sent you an confirm email. Please check it!");
-                    return Page();
-                }
-                else if (currentUser.Status == 0)
-                {
-                    ModelState.AddModelError(string.Empty, "Your account has been disabled.");
-                    return Page();
-                }
-                else
-                {
-
-                    if (result.Succeeded)
-                    {
-                        _logger.LogInformation("User logged in.");
-                        return LocalRedirect(returnUrl);
-                    }
-                    if (result.RequiresTwoFactor)
-                    {
-                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                    }
-                    if (result.IsLockedOut)
-                    {
-                        _logger.LogWarning("User account locked out.");
-                        return RedirectToPage("./Lockout");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        SendMail.SendEmail(Input.Email, "Confirm your email", emailBody, "");
+                        ModelState.AddModelError(string.Empty, "We've just sent you an confirm email. Please check it!");
                         return Page();
                     }
+                    
+                }
+
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
                 }
             }
 
