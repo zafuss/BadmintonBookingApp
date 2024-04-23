@@ -16,6 +16,7 @@ using Azure.Messaging;
 using BadmintonBookingApp.Repositories;
 using BadmintonBookingApp.Models.Padding;
 using BadmintonBookingApp.Models.Services;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BadmintonBookingApp.Controllers
 {
@@ -24,7 +25,8 @@ namespace BadmintonBookingApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IReservation _eFReservation;
-        public static int CurrentRev;
+        //public static int CurrentRev;
+        public static Reservation tempRev;
         public static DateTime b;
         public static DateTime s;
         public static DateTime e;
@@ -83,6 +85,8 @@ namespace BadmintonBookingApp.Controllers
         // GET: Reservations/Create
         public IActionResult Create()
         {
+            Reservation tempRev = null;
+            RF_DetailController.listRFD.Clear();
             return View();
         }
 
@@ -103,19 +107,30 @@ namespace BadmintonBookingApp.Controllers
                 reservation.EndTime = new DateTime(b.Year, b.Month, b.Day, e.Hour, e.Minute, e.Second);
                 s = reservation.StartTime;
                 e = reservation.EndTime;
-                if (!_eFReservation.TimeIsValid(reservation.BookingDate,reservation.StartTime,reservation.EndTime))
+                if (_eFReservation.TimeIsValid(reservation.BookingDate,reservation.StartTime,reservation.EndTime)!=0)
                 {
-                    ViewBag.Message = string.Format("Time is not valid");
+                    int i = _eFReservation.TimeIsValid(reservation.BookingDate, reservation.StartTime, reservation.EndTime);
+                    if(i==1)
+                        ViewBag.Message = string.Format("Booking date cannot be earlier than current date");
+                    else if(i==2)
+                        ViewBag.Message = string.Format("Minimun duration is 30 minutes");
+                    else if(i==3)
+                        ViewBag.Message = string.Format("Strating time cannot be earlier than current time");
+                    else
+                        ViewBag.Message = string.Format("There is no available court for this period of time");
                     return View(reservation);
                 }
-                reservation.Price = _context.Prices.FirstOrDefault();
+                reservation.PriceId = _context.Prices.FirstOrDefault().Id;
+                //reservation.Price = _context.Prices.FirstOrDefault();
                 reservation.Deposite = 50000;
                 reservation.CreateDate = DateTime.Now;
                 reservation.Status = 0;
                 reservation.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                _context.Reservations.Add(reservation);
-                await _context.SaveChangesAsync();
-                CurrentRev= reservation.Id;
+                tempRev = reservation;
+                //_context.Reservations.Add(reservation);
+                //await _context.SaveChangesAsync();
+                //CurrentRev= reservation.Id;
+                
                 return RedirectToAction("RFD","RF_Detail");
             }
             return View(reservation);
@@ -213,10 +228,10 @@ namespace BadmintonBookingApp.Controllers
 
         public async Task<IActionResult> Cancel()
         {
-            var reservation = await _context.Reservations.FindAsync(CurrentRev);
-            if(reservation != null)
-                _context.Reservations.Remove(reservation);
-            CurrentRev = -1;
+            //var reservation = await _context.Reservations.FindAsync(CurrentRev);
+            //if(reservation != null)
+            //    _context.Reservations.Remove(reservation);
+            //CurrentRev = -1;
             return RedirectToAction("Create");
         }
     }

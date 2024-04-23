@@ -19,6 +19,7 @@ namespace BadmintonBookingApp.Controllers
         DateTime s = ReservationsController.s;
         DateTime e = ReservationsController.e;
         int CurrentRev = ReservationsController.CurrentRev;
+        public static List<RF_Detail> listRFD = new List<RF_Detail>();
         public RF_DetailController(ApplicationDbContext context, IReservation eFReservation)
         {
             _context = context;
@@ -34,7 +35,7 @@ namespace BadmintonBookingApp.Controllers
 
         public IActionResult RFD()
         {
-            ViewBag.Rev = CurrentRev;
+            
             ViewBag.Court = new SelectList(_eFReservation.GetAllValidCourt(b, s, e), "Id", "CourtName");
             return View();
         }
@@ -45,25 +46,38 @@ namespace BadmintonBookingApp.Controllers
 
             if (ModelState.IsValid)
             {
-
-                rf.ReservationId = CurrentRev;
+                //rf.Court = _context.Courts.FirstOrDefault(p => p.Id == rf.CourtId);
+                listRFD.Add(rf);
                 /* var listRFD = new List<RF_Detail>();
                 listRFD.Add(rf);
                 if (listRFD.Count > 3) ;*/
-                _context.RF_Details.Add(rf);
-                await _context.SaveChangesAsync();
-                ViewBag.Rev = CurrentRev;
+                //_context.RF_Details.Add(rf);
+                //await _context.SaveChangesAsync();
                 ViewBag.Court = new SelectList(_eFReservation.GetAllValidCourt(b, s, e), "Id", "CourtName");
                 return View(rf);
             }
-            ViewBag.Rev = CurrentRev;
+          
             ViewBag.Court = new SelectList(_eFReservation.GetAllValidCourt(b, s, e), "Id", "CourtName");
             return RedirectToAction("RFD");
         }
-        public IActionResult Finish()
+        public async Task<IActionResult> Finish()
         {
-            var rf = _context.RF_Details.Where(p => p.ReservationId == CurrentRev).Include(p => p.Court).ToList();
-            return View(rf);
+            //var rf = _context.RF_Details.Where(p => p.ReservationId == CurrentRev).Include(p => p.Court).ToList();
+            _context.Reservations.Add(ReservationsController.tempRev);
+            await _context.SaveChangesAsync();
+            int id = ReservationsController.tempRev.Id;
+            ReservationsController.tempRev = null;
+            
+            foreach (var item in listRFD)
+            {
+                item.ReservationId = id;
+                item.Court = null;
+                _context.RF_Details.Add(item);
+                await _context.SaveChangesAsync();
+            }
+            RF_DetailController.listRFD.Clear();
+            List<RF_Detail> showRFD = _context.RF_Details.Include(p=>p.Court).Where(p=>p.ReservationId == id).ToList();
+            return View(showRFD);
         }
 
         // GET: RF_Detail/Details/5
@@ -209,9 +223,18 @@ namespace BadmintonBookingApp.Controllers
 
         public async Task<IActionResult> Remove(int Id)
         {
-            var rf = _context.RF_Details.FirstOrDefault(e => e.Id == Id);
-            _context.RF_Details.Remove(rf);
-            await _context.SaveChangesAsync();
+            //var rf = _context.RF_Details.FirstOrDefault(e => e.Id == Id);
+            //_context.RF_Details.Remove(rf);
+            //await _context.SaveChangesAsync();
+            List<RF_Detail> temp = listRFD;
+            foreach(var item in temp)
+            {
+                if(item.CourtId == Id)
+                {
+                    listRFD.Remove(item);
+                    break;
+                }
+            }
             return RedirectToAction("RFD");
         }
     }

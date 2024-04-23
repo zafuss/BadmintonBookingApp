@@ -4,6 +4,7 @@ using BadmintonBookingApp.Models.Reservations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.VisualBasic;
 
 namespace BadmintonBookingApp.ViewComponents
@@ -19,9 +20,14 @@ namespace BadmintonBookingApp.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            int a = ReservationsController.CurrentRev;
-            var item = await GetRecenrRFD(a);
-            return View(item);
+            //List <RF_Detail> show = RF_DetailController.listRFD;
+            foreach (var item in RF_DetailController.listRFD)
+            {
+                item.Court = _context.Courts.FirstOrDefault(p => p.Id == item.CourtId);
+            }
+            //int a = ReservationsController.CurrentRev;
+            //var item = await GetRecenrRFD(a);
+            return View(RF_DetailController.listRFD);
         }
 
         public async Task<List<RF_Detail>> GetRecenrRFD(int rev)

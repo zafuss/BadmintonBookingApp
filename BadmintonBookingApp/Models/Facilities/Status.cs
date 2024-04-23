@@ -17,6 +17,11 @@ namespace BadmintonBookingApp.Models.Facilities
         {
             { 0, "Hết phục vụ" }, { 1, "Đang phục vụ" }
         };
+        public static Dictionary<int, string> reservationDictionary = new Dictionary<int, string>()
+        {
+            { 0, "Chưa đặt cọc" }, { 1, "Đã đặt cọc" }, { 2, "Chưa thanh toán" }, { 3, "Chưa thanh toán" },
+            { 4, "Đã thanh toán" }, { 5, "Quá giờ nhận sân" }, { 6, "Đã cọc và quá giờ nhận sân" }, { 7, "Đã hủy" }
+        };
         public static string GetValue(int key,Dictionary<int,string> myDictionary) 
         {
             if (myDictionary.ContainsKey(key))

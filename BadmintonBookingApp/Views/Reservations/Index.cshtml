@@ -1,5 +1,12 @@
 ﻿@using BadmintonBookingApp.Models.Padding
 @model PaginatedList<BadmintonBookingApp.Models.Reservations.Reservation>
+﻿@using BadmintonBookingApp.Models.User
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
