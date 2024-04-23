@@ -1,20 +1,33 @@
-﻿@model IEnumerable<BadmintonBookingApp.Models.Reservations.RF_Detail>
+﻿@using BadmintonBookingApp.Models.User
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@model IEnumerable<BadmintonBookingApp.Models.Reservations.RF_Detail>
 
 @{
     ViewData["Title"] = "Finish";
+    var user = await UserManager.GetUserAsync(User);
+    var c = ViewBag.CD;
+    var b = ViewBag.BD;
+    var s = ViewBag.ST;
+    var e = ViewBag.ED;
 }
 <img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%">
 <div class="gradient-custom d-flex justify-content-center align-items-center" style="padding-top: 100px">
     <div class="card" style="background-color: #19283f; color: white; border-radius: 1rem; width: 800px; padding: 20px;">
+        
         <div class="card-body text-center">
             <h1>Thanks for choosing our services!</h1>
             <div style="padding-top: 30px; padding-bottom: 30px">
-
             <h5 style="text-align: left;">Your booking information:</h5>
-
-
             </div>
-
+            <p style="text-align: left;color: white">User:           @user.Email</p>
+            <p style="text-align: left;color: white">Phone number:   @user.PhoneNumber</p>
+            <p style="text-align: left;color: white">Create at:      @c</p>
+            <p style="text-align: left;color: white">Booking date:   @b</p>
+            <p style="text-align: left;color: white">Start time:     @s</p>
+            <p style="text-align: left;color: white">End time:       @e</p>
             <table class="table" style="color: white;">
                 <thead>
                     <tr>

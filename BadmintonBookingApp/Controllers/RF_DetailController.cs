@@ -63,11 +63,12 @@ namespace BadmintonBookingApp.Controllers
         public async Task<IActionResult> Finish()
         {
             //var rf = _context.RF_Details.Where(p => p.ReservationId == CurrentRev).Include(p => p.Court).ToList();
+            DateTime d = DateTime.Now;
+            ReservationsController.tempRev.CreateDate = d;
             _context.Reservations.Add(ReservationsController.tempRev);
             await _context.SaveChangesAsync();
             int id = ReservationsController.tempRev.Id;
             ReservationsController.tempRev = null;
-            
             foreach (var item in listRFD)
             {
                 item.ReservationId = id;
@@ -76,6 +77,10 @@ namespace BadmintonBookingApp.Controllers
                 await _context.SaveChangesAsync();
             }
             RF_DetailController.listRFD.Clear();
+            ViewBag.CD = d.ToString("dd/MM/yy HH:mm:ss");
+            ViewBag.BD = ReservationsController.b.ToString("dd/MM/yy");
+            ViewBag.ST = ReservationsController.s.ToString("HH:mm");
+            ViewBag.ED = ReservationsController.e.ToString("HH:mm");
             List<RF_Detail> showRFD = _context.RF_Details.Include(p=>p.Court).Where(p=>p.ReservationId == id).ToList();
             return View(showRFD);
         }

@@ -52,7 +52,7 @@ namespace BadmintonBookingApp.Controllers
                 else
                 {
                     var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    reservationQuery = _context.Reservations.Include(p => p.Price);
+                    reservationQuery = _context.Reservations.Include(p => p.Price).Where(p=>p.UserId==id);
                 }
                 int pageSize = 20;
                 //return View(await _context.Reservations.ToListAsync());
