@@ -143,7 +143,7 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
-                        "/EmailConfirmed",
+                        "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
@@ -171,7 +171,7 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
                     //    return LocalRedirect(returnUrl);
                     //}
                     
-                    return RedirectToPage("/RequestConfirmEmail", new { email = Input.Email, returnUrl = returnUrl });
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                 }
                 foreach (var error in result.Errors)
                 {
