@@ -164,6 +164,20 @@
   transition: all 0.5s ease;
   color: #11101D;
 }
+
+.sidebar li a.change {
+    background: #FFF;
+}
+
+    .sidebar li a.change i {
+        transition: all 0.5s ease;
+        color: #11101D;
+    }
+
+.sidebar.open li a.change .links-name {
+    transition: all 0.5s ease;
+    color: #11101D
+}
 .sidebar li i{
   height: 50px;
   line-height: 50px;
@@ -248,4 +262,5 @@
     display: none;
   }
 }
+
 /*-----------------*/
