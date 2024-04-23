@@ -1,4 +1,5 @@
-﻿using BadmintonBookingApp.Data;
+﻿using BadmintonBookingApp.Controllers;
+using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Facilities;
 using BadmintonBookingApp.Models.Reservations;
 using Microsoft.EntityFrameworkCore;
@@ -40,15 +41,17 @@ namespace BadmintonBookingApp.Repositories
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
         }
-        public bool TimeIsValid(DateTime b, DateTime s, DateTime e)
+        public int TimeIsValid(DateTime b, DateTime s, DateTime e)
         {
             if (b.Date < DateTime.Now.Date)
-                return false;
+                return 1;
             if (DateTime.Compare(s, e) > 0 || (e.Hour * 60 - s.Hour * 60 + e.Minute - s.Minute) < 30)
-                return false;
+                return 2;
             if (DateTime.Compare(s, DateTime.Now) <= 0)
-                return false;
-            return true;
+                return 3;
+            if (GetAllValidCourt(b, s, e).Count == 0)
+                return 4;
+            return 0;
         }
         public bool ValidCourt(DateTime b, DateTime s, DateTime e,Court c,List<RF_Detail> listRF_DETAIL)
         {
@@ -69,6 +72,13 @@ namespace BadmintonBookingApp.Repositories
         public List<Court> GetAllValidCourt(DateTime b, DateTime s, DateTime e)
         {
             var listC = _context.Courts.ToList();
+            if(RF_DetailController.listRFD!=null)
+            {
+                foreach (var item in RF_DetailController.listRFD)
+                {
+                    listC.Remove(_context.Courts.FirstOrDefault(p => p.Id == item.CourtId));
+                }
+            }
             var listRF_DETAIL = _context.RF_Details.Include(p => p.Reservation).Where(p =>p.Reservation.BookingDate.Date == b.Date).ToList();
             if(listRF_DETAIL.Count == 0) return listC;
             foreach (var item in _context.Courts.ToList())

@@ -14,7 +14,7 @@ namespace BadmintonBookingApp.Repositories
         Task AddAsync(Reservation reservation);
         Task UpdateAsync(Reservation reservation);
         Task DeleteAsync(int? id);
-        bool TimeIsValid(DateTime b, DateTime s, DateTime e);
+        int TimeIsValid(DateTime b, DateTime s, DateTime e);
         bool ValidCourt(DateTime b, DateTime s, DateTime e, Court c, List<RF_Detail> listRF_DETAIL);
         List<Court> GetAllValidCourt(DateTime b, DateTime s, DateTime e);
     }

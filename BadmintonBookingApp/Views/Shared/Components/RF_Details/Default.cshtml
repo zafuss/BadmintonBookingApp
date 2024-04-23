@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<BadmintonBookingApp.Models.Reservations.RF_Detail>
-
 @{
     ViewData["Title"] = "Selected court(s)";
 }
@@ -41,7 +40,7 @@
                                 @Html.DisplayFor(modelItem => item.Note)
                             </td>
                             <td>
-                                <a asp-controller="RF_Detail" asp-action="Remove" asp-route-id="@item.Id" style="color: red;">Remove</a>
+                                <a asp-controller="RF_Detail" asp-action="Remove" asp-route-id="@item.CourtId" style="color: red;">Remove</a>
                             </td>
                         </tr>
                     }

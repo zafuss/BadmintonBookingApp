@@ -1,4 +1,9 @@
-﻿@model IEnumerable<BadmintonBookingApp.Models.Reservations.Reservation>
+﻿@using BadmintonBookingApp.Models.User
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@model IEnumerable<BadmintonBookingApp.Models.Reservations.Reservation>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +11,6 @@
 }
 @* <img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%"> *@
 <a asp-action="Create" asp-controller="Reservations" class="btn btn-primary">Create new</a>
-
 <table class="table">
     <thead>
         <tr>
