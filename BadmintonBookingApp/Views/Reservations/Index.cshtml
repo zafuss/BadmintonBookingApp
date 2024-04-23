@@ -33,7 +33,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Price.PriceTag)
             </th>
             <th></th>
         </tr>
@@ -67,11 +67,11 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price.Id)
+                    @Html.DisplayFor(modelItem => item.Price.PriceTag)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> 
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a> 
+                    @*<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> *@
+                    <a asp-action="DetailRFD" asp-controller="Reservations" asp-route-id="@item.Id" class="btn btn-secondary">Details</a> 
                    @*  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> *@
                 </td>
             </tr>

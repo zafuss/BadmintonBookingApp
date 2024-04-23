@@ -39,7 +39,14 @@ namespace BadmintonBookingApp.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reservations.ToListAsync());
+            if(User.IsInRole("Admin"))
+                return View(await _context.Reservations.Include(p=>p.Price).ToListAsync());
+            else
+            {
+                var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return View(await _context.Reservations.Include(p => p.Price).Where(p=>p.UserId==id).ToListAsync());
+            }
+                
         }
 
         // GET: Reservations/Details/5
@@ -212,6 +219,10 @@ namespace BadmintonBookingApp.Controllers
             //    _context.Reservations.Remove(reservation);
             //CurrentRev = -1;
             return RedirectToAction("Create");
+        }
+        public async Task<IActionResult> DetailRFD(int id)
+        {
+            return View(_context.RF_Details.Include(p=>p.Court).Where(f => f.ReservationId == id).ToList());
         }
     }
 }
