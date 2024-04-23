@@ -14,6 +14,8 @@ using System.Security.Claims;
 using NuGet.Protocol.Plugins;
 using Azure.Messaging;
 using BadmintonBookingApp.Repositories;
+using BadmintonBookingApp.Models.Padding;
+using BadmintonBookingApp.Models.Services;
 
 namespace BadmintonBookingApp.Controllers
 {
@@ -35,9 +37,13 @@ namespace BadmintonBookingApp.Controllers
         }
 
         // GET: Reservations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            return View(await _context.Reservations.ToListAsync());
+            int pageSize = 20;
+            //return View(await _context.Reservations.ToListAsync());
+            IQueryable<Reservation> reservationQuery = _context.Reservations; 
+            var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, pageSize);
+            return View(paginatedReservations);
         }
 
         // GET: Reservations/Details/5
@@ -57,8 +63,23 @@ namespace BadmintonBookingApp.Controllers
 
             return View(reservation);
         }
-        
-        
+        public async Task<IActionResult> SearchReservations (DateTime startDate, DateTime endDate, int pageNumber = 1)
+        {
+            IQueryable<Reservation> reservationQuery;
+
+            if (startDate == default(DateTime) && endDate == default(DateTime))
+            {
+                reservationQuery = _context.Reservations;
+            }
+            else
+            {
+                reservationQuery = _context.Reservations.Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate );
+
+            }
+            var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, 20);
+            return PartialView("_ReservationsSearchResult", paginatedReservations);
+        }
+
         // GET: Reservations/Create
         public IActionResult Create()
         {

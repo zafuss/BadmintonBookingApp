@@ -7,10 +7,10 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" onclick="Change()">Hello @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" onclick="Change()">
                 <button type="submit" class="btn  rounded-pill main-btn">Logout</button>
             </form>
         </li>
@@ -18,8 +18,25 @@
     else
     {
         <div>
-            <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login">Login</a>
-            <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Login</a>
+            <a class="btn  rounded-pill main-btn" asp-area="Identity" asp-page="/Account/Register" onclick="Change()">Register</a>
         </div>
     }
 </ul>
+
+<script>
+    function Change(stringVariable) {
+        $.ajax({
+            url: '/Home/UpdateSlideValue',
+            type: 'POST',
+            dataType: 'json',
+            data: { slideValue: stringVariable },
+            success: function (result) {
+                console.log("Slide value updated successfully!");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error occurred while updating slide value:", error);
+            }
+        });
+    }
+</script>
