@@ -75,9 +75,9 @@
                 <td>
                     @if(User.IsInRole("Admin"))
                     {
-                        <a asp-action="CancelDetail" asp-controller="Reservations" asp-route-id="@item.Id" style="margin-right: 5px" class="btn btn-warning">Cancel</a>
+                        <a asp-action="CancelDetail" asp-controller="Reservations" asp-route-id="@item.Id" style="margin-right: 0px" class="btn btn-warning">Cancel</a>
                     }
-                    <a asp-action="DetailRFD" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
+                    <a asp-action="DetailRFD" asp-route-id="@item.Id" class="btn btn-secondary" style="margin-left:0px">Details</a>
                     @*  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> *@
                 </td>
             </tr>
@@ -92,7 +92,7 @@
             @for (int i = 1; i <= @Model.TotalPages; i++)
             {
                 <li class="page-item @(i == @Model.PageIndex ?"active" : "")">
-                    <a class="page-link" onclick="test(@i)">
+                    <a class="page-link" onclick="test(@i)" style="margin:0 0">
                         @i
                     </a>
                 </li>
