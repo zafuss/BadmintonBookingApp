@@ -18,7 +18,7 @@ namespace BadmintonBookingApp.Controllers
         DateTime b = ReservationsController.b;
         DateTime s = ReservationsController.s;
         DateTime e = ReservationsController.e;
-        int CurrentRev = ReservationsController.CurrentRev;
+        //int CurrentRev = ReservationsController.CurrentRev;
         public static List<RF_Detail> listRFD = new List<RF_Detail>();
         public RF_DetailController(ApplicationDbContext context, IReservation eFReservation)
         {

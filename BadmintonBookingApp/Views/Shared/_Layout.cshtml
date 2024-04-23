@@ -1,9 +1,4 @@
-﻿@using BadmintonBookingApp.Models.User
-@using Microsoft.AspNetCore.Identity
-@using System.Security.Claims
-@inject SignInManager<AppUser> SignInManager
-@inject UserManager<AppUser> UserManager
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     @using BadmintonBookingApp.Models.Nav
@@ -102,20 +97,7 @@
                         </a>
                         <span class="tooltip">User</span>
                     </li>
-                    @if (User.Identity!.IsAuthenticated)
-                    {
-                        var user = await UserManager.GetUserAsync(User);
-                        if (user != null)
-                        {
-                            <li>
-                                <a asp-area="" asp-action="Index" asp-controller="Reservations>
-                                    <i class='bx bx-user'></i>
-                                    <span class="links-name">User</span>
-                                </a>
-                                <span class="tooltip">History</span>
-                            </li>
-                        }
-                    }
+                    
 
                     @* <li>
             <a href="#">
@@ -184,6 +166,7 @@
                                 <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login">Reserve Courts</a>
                             }
                         </li>
+                       
                     </ul>
                     <div class="search ps-3 pe-3 d-none d-lg-block">
                         <i class="fa-solid fa-magnifying-glass"></i>
