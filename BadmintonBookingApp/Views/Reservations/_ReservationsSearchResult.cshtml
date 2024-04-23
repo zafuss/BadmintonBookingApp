@@ -2,10 +2,14 @@
 @model PaginatedList<BadmintonBookingApp.Models.Reservations.Reservation>
 @{
     ViewData["Title"] = "_ReservarionsSearchResult";
+    int count = (@Model.PageIndex -1)*20;
 }
 <table class="table">
     <thead>
         <tr>
+            <th>
+                STT
+            </th>
             <th>
                 Deposite
             </th>
@@ -32,8 +36,14 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
+        {   
             <tr>
+                <td>
+                    @{
+                        count = count + 1;
+                    }
+                    @count
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Deposite)
                 </td>

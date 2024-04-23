@@ -179,8 +179,26 @@
                             
                             <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court" onclick="Change()">Court</a>
                         </li>
-                      
-                   
+                        <li class="nav-item">
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Create" asp-controller="Reservations" onclick="Change()">Reserve Courts</a>
+                            } else
+                            {
+
+                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Reserve Courts</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations" onclick="Change()">Reserve History</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Reserve History</a>
+                            }
+                        </li>
 
                     </ul>
                     <div class="search ps-3 pe-3 d-none d-lg-block">
