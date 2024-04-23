@@ -24,7 +24,7 @@ builder.Services.AddScoped<IReservation, EFReservation>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
-options.SignIn.RequireConfirmedAccount = true)
+options.SignIn.RequireConfirmedAccount = false)
 
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders()

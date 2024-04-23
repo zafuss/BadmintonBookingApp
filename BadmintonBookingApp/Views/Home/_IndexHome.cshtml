@@ -5,13 +5,13 @@
 }
 
 <div class="our-work text-center pt-5 pb-5" id="services" style="position:relative">
-    <div class="container" >
+    <div class="container">
         <div class="main-title mt-5 mb-5 position-relative">
             @* <img class="mb-4" src="imgs/title.png" alt="" /> *@
             <h2>We Serve This</h2>
             <p class="text-black-50 text-uppercase">Prepare To Be Amazed</p>
         </div>
-        <div class="row" >
+        <div class="row">
             @foreach (var service in @Model.services)
             {
                 if (@service.Status != 0)
@@ -24,21 +24,21 @@
                 }
 
             }
-            
+
         </div>
         <button id="prev" onclick="prev(@Model.services.PageIndex)"> &lt; </button>
         <button id="next" onclick="next(@Model.services.PageIndex)"> &gt; </button>
     </div>
-       
+
     <div>
         <nav aria-label="Page navigation">
-            <ul class="pagination"">
+            <ul class="pagination" ">
                 <div class="dot-border">
-                    @for (int i = 1; i <= @Model.services.TotalPages; i++)
-                    {
+            @for (int i = 1; i <= @Model.services.TotalPages; i++)
+            {
                         <button onclick="test(@i)" style="background-color:@(i == @Model.services.PageIndex ? "#8052ec" : "transparent")"></button>
-                    }
-                 </div>
+            }
+                </div>
             </ul>
         </nav>
 
@@ -82,58 +82,62 @@
             <div class="row">
                 <div class="col-md-6 col-lg-4">
                     <div class="box bg-white">
-                        @* <img class="img-fluid" src="imgs/palastane.png" alt="" /> *@
+             <img class="img-fluid" src="https://thanhnien.mediacdn.vn/Uploaded/voba/2022_10_03/a1-3517.jpg" alt="" /> 
                         <h4 class="p-3 text-light">Zafuss</h4>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="box bg-white">
-                        @* <img class="img-fluid" src="imgs/emad1.jpg" alt="" /> *@
+                        <img class="img-fluid" src="https://akm-img-a-in.tosshub.com/indiatoday/images/media_bank/202309/antony-055645-1x1.jpg?VersionId=lPXxySY2FnT4KNjuasCkuUs3GYrHKjcx" alt="" />
                         <h4 class="p-3 text-light">Antony Nguyen</h4>
 
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="box bg-white">
-                        @* <img class="img-fluid" src="imgs/atiah11.jpg" alt="" /> *@
-                        <h4 class="p-3 text-light">Cau Vang</h4>
 
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="box bg-white">
-                        @* <img class="img-fluid" src="imgs/basel.jpg" alt="" /> *@
-                        <h4 class="p-3 text-light">Father</h4>
+                <div class="row">
 
+                    <div class="col-md-6 col-lg-4">
+                        <div class="box bg-white">
+                            <img class="img-fluid" style="" src="https://storage.googleapis.com/sticker-prod/5Jl6QAjXuj2448nICL35/0.png" alt="" />
+                            <h4 class="p-3 text-light">Cau Vang</h4>
+
+                        </div>
                     </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="box bg-white">
+                            <img class="img-fluid" src="https://akm-img-a-in.tosshub.com/indiatoday/images/media_bank/202308/cillian-murphy-071440-1x1.jpg?VersionId=bhADmLkKuf8GHGdQzGQ3Ie6a97iDiqqW" alt="" />
+                            <h4 class="p-3 text-light">Father</h4>
+
+                        </div>
+                    </div>
+
                 </div>
-              
             </div>
         </div>
     </div>
 
-<script>
-    function test(number) {
-        $.ajax({
-            url: "@Url.Action("IndexHome", "Home")",
-            data: {pageNumber: number},
-            type: "Post",
-            success: function (result) {
-                $("#itemlist").html("");
-                $("#itemlist").html(result);
-            },
-            error: function (result) {
-                window.alert("This is an unhandled exception. ");
+    <script>
+        function test(number) {
+            $.ajax({
+                url: "@Url.Action("IndexHome", "Home")",
+                data: { pageNumber: number },
+                type: "Post",
+                success: function (result) {
+                    $("#itemlist").html("");
+                    $("#itemlist").html(result);
+                },
+                error: function (result) {
+                    window.alert("This is an unhandled exception. ");
+                }
+            });
+        }
+        function next(index) {
+            if (index + 1 > @Model.services.TotalPages) {
+                index = 1;
             }
-        });
-    }
-    function next(index) {
-        if (index + 1 > @Model.services.TotalPages) {
-            index = 1;
-        }
-        else {
-            index = index + 1;
-        }
+            else {
+                index = index + 1;
+            }
             $.ajax({
                 url: "@Url.Action("IndexHome", "Home")",
                 data: { pageNumber: index },
@@ -146,8 +150,8 @@
                     window.alert("This is an unhandled exception. ");
                 }
             });
-    }
-     function prev(index) {
+        }
+        function prev(index) {
             if (index == 1) {
                 index = @Model.services.TotalPages;
             }
@@ -167,4 +171,4 @@
                 }
             });
         }
-</script>
+    </script>
