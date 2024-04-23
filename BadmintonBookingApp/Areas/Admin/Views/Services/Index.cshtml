@@ -5,15 +5,59 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="~/css/myStyle.css"/>
+@* <style>
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+        .dropdown:hover {
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            transition: 0.5s all;
+        }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: var(--secondaryColor);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 8px;
+    }
+
+        .dropdown-content .dropdown-menu-item {
+            float: none;
+            color: #000;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .dropdown-content a {
+            text-decoration: none;
+        }
+
+        .dropdown-content .dropdownA-menu-item:hover {
+            background-color: #ddd;
+            border-radius: 8px;
+        }
+
+    .dropdown:hover .dropdownA-content {
+        display: block;
+    }
+</style> *@
 <p>
     <a class="btn btn-primary" asp-action="create">Create new</a>
 </p>
-<div>
+<div >
     <form class="d-flex  tm-search-form dropdown" method="get" id="search-form">
         <div>
             <input class="form-control tm-search-input" name="query" id="search-input" type="text" placeholder="Search" aria-label="Search">
-            <div id="search-results" class="dropdown-content">
-            </div>
+            <div id="search-results" class="dropdown-content"></div>
         </div>
 
         <button class="btn btn-outline-success tm-search-btn" type="button" value="Search" id="addBtn">
