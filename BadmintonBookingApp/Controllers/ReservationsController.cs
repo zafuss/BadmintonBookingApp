@@ -54,7 +54,7 @@ namespace BadmintonBookingApp.Controllers
                     var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     reservationQuery = _context.Reservations.Where(x => x.UserId == id).Include(p => p.Price);
                 }
-                int pageSize = 20;
+                int pageSize = 10;
                 //return View(await _context.Reservations.ToListAsync());
 
                 var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, pageSize);
@@ -110,7 +110,7 @@ namespace BadmintonBookingApp.Controllers
                         reservationQuery = _context.Reservations.Where(x => x.UserId == id).Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate).Include(p => p.Price); ;
                     }
                 }
-                var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, 20);
+                var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, 10);
                 return PartialView("_ReservationsSearchResult", paginatedReservations);
 
             }

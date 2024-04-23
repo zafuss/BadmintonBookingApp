@@ -1,10 +1,11 @@
 ﻿@using BadmintonBookingApp.Models.Padding
+@using BadmintonBookingApp.Models.Facilities
 @model PaginatedList<BadmintonBookingApp.Models.Reservations.Reservation>
 @{
     ViewData["Title"] = "_ReservarionsSearchResult";
-    int count = (@Model.PageIndex -1)*20;
+    int count = (@Model.PageIndex -1)*10;
 }
-<table class="table">
+<table class="table" style="color: white;">
     <thead>
         <tr>
             <th>
@@ -66,7 +67,7 @@
                     @item.EndTime.ToString("HH:mm")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Status)
+                    @Status.GetValue(item.Status, Status.reservationDictionary)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price.PriceTag)
@@ -74,7 +75,7 @@
                 <td>
                     @if(User.IsInRole("Admin"))
                     {
-                        <a asp-action="CancelDetail" asp-controller="Reservations" asp-route-id="@item.Id" class="btn btn-warning">Cancel</a>
+                        <a asp-action="CancelDetail" asp-controller="Reservations" asp-route-id="@item.Id" style="margin-right: 5px" class="btn btn-warning">Cancel</a>
                     }
                     <a asp-action="DetailRFD" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
                     @*  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> *@
