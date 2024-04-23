@@ -41,17 +41,23 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Deposite)
                 </td>
-                <td>
+                @* <td>
                     @Html.DisplayFor(modelItem => item.CreateDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BookingDate)
+                </td> *@
+                <td>
+                   @item.CreateDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
+                    @item.BookingDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
+                    @item.StartTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.EndTime.ToString("HH:mm")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
