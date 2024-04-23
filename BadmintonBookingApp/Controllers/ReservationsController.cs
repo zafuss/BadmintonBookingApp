@@ -17,11 +17,13 @@ using BadmintonBookingApp.Repositories;
 using BadmintonBookingApp.Models.Padding;
 using BadmintonBookingApp.Models.Services;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BadmintonBookingApp.Controllers
 {
     public class ReservationsController : Controller
     {
+
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IReservation _eFReservation;
@@ -37,7 +39,7 @@ namespace BadmintonBookingApp.Controllers
             _userManager = userManager;
             _eFReservation = eFReservation;
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Reservations
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
@@ -49,6 +51,7 @@ namespace BadmintonBookingApp.Controllers
         }
 
         // GET: Reservations/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,6 +68,7 @@ namespace BadmintonBookingApp.Controllers
 
             return View(reservation);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SearchReservations (DateTime startDate, DateTime endDate, int pageNumber = 1)
         {
             IQueryable<Reservation> reservationQuery;
@@ -83,6 +87,7 @@ namespace BadmintonBookingApp.Controllers
         }
 
         // GET: Reservations/Create
+    
         public IActionResult Create()
         {
             Reservation tempRev = null;
@@ -93,6 +98,7 @@ namespace BadmintonBookingApp.Controllers
         // POST: Reservations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BookingDate,StartTime,EndTime")] Reservation reservation)
@@ -135,9 +141,10 @@ namespace BadmintonBookingApp.Controllers
             }
             return View(reservation);
         }
-        
-        
+
+
         // GET: Reservations/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -156,6 +163,7 @@ namespace BadmintonBookingApp.Controllers
         // POST: Reservations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Deposite,CreateDate,BookingDate,StartTime,EndTime,Status")] Reservation reservation)
@@ -189,6 +197,7 @@ namespace BadmintonBookingApp.Controllers
         }
 
         // GET: Reservations/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -209,6 +218,7 @@ namespace BadmintonBookingApp.Controllers
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reservation = await _context.Reservations.FindAsync(id);
@@ -220,7 +230,7 @@ namespace BadmintonBookingApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+      
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.Id == id);
