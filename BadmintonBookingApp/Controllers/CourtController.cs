@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Facilities;
 using BadmintonBookingApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BadmintonBookingApp.Controllers
 {
+    [Area("Admin"), Authorize(Roles = "Admin")]
+
     public class CourtController : Controller
     {
         private readonly ApplicationDbContext _context;

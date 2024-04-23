@@ -123,6 +123,7 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.FullName = Input.FullName;
+                user.Status = 1;
                 user.PhoneNumber = Input.PhoneNumber;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -133,6 +134,7 @@ namespace BadmintonBookingApp.Areas.Identity.Pages.Account
                 }
                 // Assign the "User" role to the newly registered user
                 await _userManager.AddToRoleAsync(user, "Customer");
+               
 
                 if (result.Succeeded)
                 {
