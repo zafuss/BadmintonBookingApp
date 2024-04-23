@@ -45,7 +45,7 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
             //             var paginatedProducts = await PaginatedList<Product>.CreateAsync(productsQuery, pageNumber, 10);
             //             return View(paginatedProducts);
             //         }
-            IQueryable<Service> servicesQuery = _context.Services;
+            IQueryable<Service> servicesQuery = _context.Services.OrderByDescending(x => x.Status).ThenBy(x => x.ServiceName);
             var paginatedProducts = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, pageSize);
             return View(paginatedProducts);
         }
@@ -215,15 +215,23 @@ namespace BadmintonBookingApp.Areas.Admin.Controllers
 
             if (string.IsNullOrEmpty(query))
             {
-                servicesQuery = _context.Services;
+                servicesQuery = _context.Services.OrderByDescending(x => x.Status).ThenBy(x => x.ServiceName); 
             }
             else
             {
-                servicesQuery = _context.Services.Where(p => p.ServiceName.Contains(query));
+                servicesQuery = _context.Services.Where(p => p.ServiceName.Contains(query)).OrderByDescending(x => x.Status).ThenBy(x => x.ServiceName); ;
 
             }
             var paginatedProducts = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 10);
             return PartialView("_ServiceSearchResult", paginatedProducts);
+        }
+        public List<string> SearchSuggestions(string query)
+        {
+            return _context.Services
+            .Where(p => p.ServiceName.StartsWith(query))
+            .Select(p => p.ServiceName)
+            .ToList();
+
         }
     }
 }

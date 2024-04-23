@@ -374,6 +374,48 @@
         }
         document.getElementById("@Sidebar.curSlide").className = "change";
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#search-input").keyup(function () {
+                var query = $(this).val();
+                if (query !== '') {
+                    $.ajax({
+                        url: "@Url.Action("SearchSuggestions", "Services", new { Area = "Admin" })",
+                        type: "GET",
+                        data: { query: query },
+                        dataType: "json",
+                        success: function (data) {
+                            $("#search-results").empty(); // Clear previous suggestions
+                            $.each(data, function (index, suggestion) {
+                                $("#search-results").append("<div class='suggestion'>" + suggestion + "</div>"); // Append new suggestions
+
+                            });
+                            $(".dropdown-content").css("display", "block"); // Show dropdown
+                        },
+                        error: function (xhr, status, error) {
+                            console.log("Error:", error);
+                        }
+                    });
+                } else {
+                    $("#search-results").empty(); // Clear suggestions if query is empty
+                    $(".dropdown-content").css("display", "none"); // Hide dropdown if input
+                }
+            });
+            // Handle click on suggestion
+            $(document).on("click", ".suggestion", function () {
+                var selectedSuggestion = $(this).text();
+                $("#search-input").val(selectedSuggestion); // Set search input value to
+                $("#search-results").empty(); // Clear suggestions
+                $(".dropdown-content").css("display", "none"); // Hide dropdown
+            });
+            // Close dropdown if user clicks outside of it
+            $(document).click(function (event) {
+                if (!$(event.target).closest('.dropdown').length) {
+                    $(".dropdown-content").css("display", "none");
+                }
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

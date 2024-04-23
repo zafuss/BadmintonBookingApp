@@ -19,7 +19,7 @@ namespace BadmintonBookingApp.Repositories
 
         public async Task<IQueryable<Service>> GetServices()
         {
-            return _context.Services;
+            return _context.Services.Where(x => x.Status !=0).OrderBy(x => x.ServiceName);
         }
         public async Task<Service> GetByIdAsync(int id)
         {
