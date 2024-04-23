@@ -7,6 +7,7 @@ using BadmintonBookingApp.Models.Services;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using BadmintonBookingApp.Models.Padding;
+using BadmintonBookingApp.Models.Nav;
 
 namespace BadmintonBookingApp.Controllers
 {
@@ -40,7 +41,6 @@ namespace BadmintonBookingApp.Controllers
             servicesQuery = await _serviceRepository.GetServices();
             var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 9);
             UserModel _userModel = new UserModel(paginatedServices, await _courtRepository.GetAllAsync());
-
             return PartialView("_IndexHome", _userModel);
         }
         public IActionResult Privacy()
@@ -52,6 +52,14 @@ namespace BadmintonBookingApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public static int SlideValue { get; set; }
+
+        [HttpPost]
+        public ActionResult UpdateSlideValue(string slideValue)
+        {
+            Sidebar.curSlide = slideValue;
+            return Json(new { success = true });
         }
     }
 }
