@@ -39,23 +39,28 @@ namespace BadmintonBookingApp.Controllers
             _userManager = userManager;
             _eFReservation = eFReservation;
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         // GET: Reservations
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            if(User.IsInRole("Admin"))
-                return View(await _context.Reservations.Include(p=>p.Price).ToListAsync());
-            else
+
+            if (User.Identity.IsAuthenticated)
             {
-                var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                return View(await _context.Reservations.Include(p => p.Price).Where(p=>p.UserId==id).ToListAsync());
+                IQueryable<Reservation> reservationQuery;
+                if (User.IsInRole("Admin"))
+                    reservationQuery = _context.Reservations.Include(p => p.Price);
+                else
+                {
+                    var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    reservationQuery = _context.Reservations.Include(p => p.Price);
+                }
+                int pageSize = 20;
+                //return View(await _context.Reservations.ToListAsync());
+
+                var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, pageSize);
+                return View(paginatedReservations);
             }
-                
-            int pageSize = 20;
-            //return View(await _context.Reservations.ToListAsync());
-            IQueryable<Reservation> reservationQuery = _context.Reservations; 
-            var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, pageSize);
-            return View(paginatedReservations);
+            return NotFound();
         }
 
         // GET: Reservations/Details/5
@@ -77,7 +82,7 @@ namespace BadmintonBookingApp.Controllers
             return View(reservation);
         }
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> SearchReservations (DateTime startDate, DateTime endDate, int pageNumber = 1)
+        public async Task<IActionResult> SearchReservations(DateTime startDate, DateTime endDate, int pageNumber = 1)
         {
             IQueryable<Reservation> reservationQuery;
 
@@ -87,7 +92,7 @@ namespace BadmintonBookingApp.Controllers
             }
             else
             {
-                reservationQuery = _context.Reservations.Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate );
+                reservationQuery = _context.Reservations.Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate);
 
             }
             var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, 20);
@@ -95,7 +100,7 @@ namespace BadmintonBookingApp.Controllers
         }
 
         // GET: Reservations/Create
-    
+
         public IActionResult Create()
         {
             Reservation tempRev = null;
@@ -111,7 +116,7 @@ namespace BadmintonBookingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BookingDate,StartTime,EndTime")] Reservation reservation)
         {
-       
+
             if (ModelState.IsValid)
             {
                 b = reservation.BookingDate;
@@ -121,14 +126,14 @@ namespace BadmintonBookingApp.Controllers
                 reservation.EndTime = new DateTime(b.Year, b.Month, b.Day, e.Hour, e.Minute, e.Second);
                 s = reservation.StartTime;
                 e = reservation.EndTime;
-                if (_eFReservation.TimeIsValid(reservation.BookingDate,reservation.StartTime,reservation.EndTime)!=0)
+                if (_eFReservation.TimeIsValid(reservation.BookingDate, reservation.StartTime, reservation.EndTime) != 0)
                 {
                     int i = _eFReservation.TimeIsValid(reservation.BookingDate, reservation.StartTime, reservation.EndTime);
-                    if(i==1)
+                    if (i == 1)
                         ViewBag.Message = string.Format("Booking date cannot be earlier than current date");
-                    else if(i==2)
+                    else if (i == 2)
                         ViewBag.Message = string.Format("Minimun duration is 30 minutes");
-                    else if(i==3)
+                    else if (i == 3)
                         ViewBag.Message = string.Format("Strating time cannot be earlier than current time");
                     else
                         ViewBag.Message = string.Format("There is no available court for this period of time");
@@ -144,8 +149,8 @@ namespace BadmintonBookingApp.Controllers
                 //_context.Reservations.Add(reservation);
                 //await _context.SaveChangesAsync();
                 //CurrentRev= reservation.Id;
-                
-                return RedirectToAction("RFD","RF_Detail");
+
+                return RedirectToAction("RFD", "RF_Detail");
             }
             return View(reservation);
         }
@@ -238,7 +243,7 @@ namespace BadmintonBookingApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-      
+
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.Id == id);
@@ -254,7 +259,27 @@ namespace BadmintonBookingApp.Controllers
         }
         public async Task<IActionResult> DetailRFD(int id)
         {
-            return View(_context.RF_Details.Include(p=>p.Court).Where(f => f.ReservationId == id).ToList());
+            return View(_context.RF_Details.Include(p => p.Court).Where(f => f.ReservationId == id).ToList());
+        }
+        public async Task<IActionResult> CancelDetail(int id)
+        {
+            Reservation rev = _context.Reservations.Include(p=>p.RF_Details).FirstOrDefault(p=>p.Id==id);
+
+            if(rev != null)
+            {
+                int d = rev.Id;
+                List<RF_Detail> listRFD = _context.RF_Details.Where(p => p.ReservationId == d).ToList();
+                foreach(RF_Detail detail in listRFD)
+                {
+                    _context.RF_Details.Remove(detail);
+                    await _context.SaveChangesAsync();
+                }
+                rev.Status = 7;
+                _context.Reservations.Update(rev);
+                await _context.SaveChangesAsync();
+            }
+             
+            return RedirectToAction("Index");
         }
     }
 }
