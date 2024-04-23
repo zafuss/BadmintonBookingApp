@@ -52,7 +52,7 @@ namespace BadmintonBookingApp.Controllers
                 else
                 {
                     var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    reservationQuery = _context.Reservations.Include(p => p.Price);
+                    reservationQuery = _context.Reservations.Where(x => x.UserId == id).Include(p => p.Price);
                 }
                 int pageSize = 20;
                 //return View(await _context.Reservations.ToListAsync());
@@ -60,7 +60,7 @@ namespace BadmintonBookingApp.Controllers
                 var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, pageSize);
                 return View(paginatedReservations);
             }
-            return NotFound();
+            return RedirectToAction(nameof(HomeController.Index),"Home");
         }
 
         // GET: Reservations/Details/5
@@ -81,22 +81,40 @@ namespace BadmintonBookingApp.Controllers
 
             return View(reservation);
         }
-        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> SearchReservations(DateTime startDate, DateTime endDate, int pageNumber = 1)
         {
-            IQueryable<Reservation> reservationQuery;
-
-            if (startDate == default(DateTime) && endDate == default(DateTime))
+            if (User.Identity.IsAuthenticated)
             {
-                reservationQuery = _context.Reservations;
-            }
-            else
-            {
-                reservationQuery = _context.Reservations.Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate);
+                IQueryable<Reservation> reservationQuery;
+                if (User.IsInRole("Admin"))
+                {
+                    if (startDate == default(DateTime) && endDate == default(DateTime))
+                    {
+                        reservationQuery = _context.Reservations.Include(p => p.Price);
+                    }
+                    else
+                    {
+                        reservationQuery = _context.Reservations.Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate).Include(p => p.Price); ;
+                    }
+                }
+                else
+                {
+                    var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    if (startDate == default(DateTime) && endDate == default(DateTime))
+                    {
+                        reservationQuery = _context.Reservations.Where(x => x.UserId == id).Include(p => p.Price);
+                    }
+                    else
+                    {
+                        reservationQuery = _context.Reservations.Where(x => x.UserId == id).Where(p => startDate <= p.BookingDate && p.BookingDate <= endDate).Include(p => p.Price); ;
+                    }
+                }
+                var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, 20);
+                return PartialView("_ReservationsSearchResult", paginatedReservations);
 
             }
-            var paginatedReservations = await PaginatedList<Reservation>.CreateAsync(reservationQuery, pageNumber, 20);
-            return PartialView("_ReservationsSearchResult", paginatedReservations);
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         // GET: Reservations/Create

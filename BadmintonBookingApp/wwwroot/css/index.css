@@ -62,21 +62,21 @@ button{
     background-color: #8052ec;
     color: #ffffff;
     margin: auto;
-    top: 16%;
+/*    top: 85%;*/
     position:absolute;
-    bottom: 0;
+    bottom: 60px;
     border: none; 
     border-radius: 3px;
     font-size: 18px;
     font-weight: bolder;
 }
 #prev {
-    left: 15px;
+    left:15px;
     float: left;
     margin-left: 10%;
 }
 #next {
-    right: 15px;
+    right:15px;
     float: right;
     margin-right: 10%;
 }

@@ -169,12 +169,11 @@
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations">Reserve History</a>
+                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Index" asp-controller="Reservations" onclick="Change()">Reserve History</a>
                             }
                             else
                             {
-
-                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login">Reserve History</a>
+                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Reserve History</a>
                             }
                         </li>
 

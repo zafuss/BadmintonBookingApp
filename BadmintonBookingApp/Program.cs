@@ -4,6 +4,7 @@ using BadmintonBookingApp.Repositories;
 using BadmintonBookingApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
 app.MapControllerRoute(
     name: "Admin",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -56,6 +58,12 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "notFound",
+    pattern: "{*url}",
+    defaults: new { controller = "Home", action = "Index"});
+    
 app.MapRazorPages();
 
 app.Run();
