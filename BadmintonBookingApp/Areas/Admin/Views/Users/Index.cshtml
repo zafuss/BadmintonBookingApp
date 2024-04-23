@@ -1,0 +1,92 @@
+﻿@model BadmintonBookingApp.ViewModels.UserViewModel
+@using BadmintonBookingApp.Models.User
+@using Microsoft.AspNetCore.Identity
+@inject RoleManager<IdentityRole> roleManager
+@inject UserManager<AppUser> userManager
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>Users</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.FirstOrDefault().FullName)
+            </th>
+            <th>
+                Role
+            </th>
+
+            <!-- Các thuộc tính mặc định của IdentityUser -->
+
+            <th>
+                @Html.DisplayNameFor(model => model.Users.FirstOrDefault().EmailConfirmed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (AppUser item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @{
+                        var userRoles = await userManager.GetRolesAsync(item);
+
+                        foreach (var role in userRoles)
+                        {
+                            @role <br />
+                        }
+                    }
+                </td>
+                <!-- Các thuộc tính mặc định của IdentityUser -->
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> 
+                    @if (userRoles.First() != "Admin")
+                    {
+
+                        
+                        <a class="btn @(item.Status == 1 ? "btn-danger" : "btn-success")" onclick="changeStatus('@item.Id', '@Url.Action("ChangeStatus")')">
+                            @(item.Status == 1 ? "Disable" : "Enable")
+                        </a>
+                    }
+                </td>
+
+                <script>
+                    function changeStatus(userId, url) {
+                        $.post(url, { id: userId })
+                            .done(function () {
+                                location.reload();
+                            })
+                            .fail(function () {
+                                alert("Failed to change status.");
+                            });
+                    }
+                </script>
+
+            </tr>
+        }
+    </tbody>
+</table>

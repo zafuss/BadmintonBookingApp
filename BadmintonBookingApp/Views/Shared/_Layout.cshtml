@@ -63,7 +63,7 @@
                 </div>
                 <ul class="nav-list" style="padding:initial">
                     <li>
-                        <a asp-area="" asp-action="Index" asp-controller="Court" id="content1" onclick="Change(id)" >
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Court" id="content1" onclick="Change(id)" >
                             <i class='bx bx-grid-alt'></i>
                             <span class="links-name">Court</span>
                         </a>
@@ -91,7 +91,7 @@
                         <span class="tooltip">Price</span>
                     </li>
                     <li>
-                        <a asp-area="" asp-action="Index" asp-controller="User" id="content5" onclick="Change(id)">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Users" id="content5" onclick="Change(id)">
                             <i class='bx bx-user'></i>
                             <span class="links-name">User</span>
                         </a>
@@ -127,7 +127,7 @@
                                 <div class="name">@User.Identity.Name</div>
                                 <div class="job">Admin</div>
                             </div>
-                            <a asp-area="Identity" asp-page="/Account/Logout"><i class='bx bx-log-out' id="log-out"></i></a>
+                            <a asp-area="Identity" asp-page="/Account/Logout"><i class='bx bx-log-out' id="log-out" onclick="Change()"></i></a>
                         </div>
                     </li>
                 </ul>
@@ -138,7 +138,7 @@
     <section id="MyElement">
         <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home",new {Area = ""})#tm-video-container">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home",new {Area = ""})#tm-video-container" onclick="Change()">
                     <img style="width: 150px" src="~/images/logo/badminton_logo_light.png" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,23 +147,23 @@
                 <div class="collapse navbar-collapse" id="main" style="background: #19283F">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="@Url.Action("Index", "Home", new { Area = "" })#tm-video-container">Home</a>
+                            <a class="nav-link p-2 p-lg-3 active" aria-current="page" href="@Url.Action("Index", "Home", new { Area = "" })#tm-video-container" onclick="Change()">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home", new {Area = ""})#services">Services</a>
+                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home", new {Area = ""})#services" onclick="Change()">Services</a>
                         </li>
                         <li class="nav-item">
                             
-                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court">Court</a>
+                            <a class="nav-link p-2 p-lg-3" href="@Url.Action("Index", "Home",new {Area = ""})#court" onclick="Change()">Court</a>
                         </li>
                         <li class="nav-item">
                             @if(User.Identity.IsAuthenticated)
                             {
-                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Create" asp-controller="Reservations">Reserve Courts</a>
+                                <a class="nav-link p-2  p-lg-3" asp-area="" asp-action="Create" asp-controller="Reservations" onclick="Change()">Reserve Courts</a>
                             } else
                             {
-                                
-                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login">Reserve Courts</a>
+
+                                <a class="nav-link p-2  p-lg-3" asp-area="Identity" asp-page="/Account/Login" onclick="Change()">Reserve Courts</a>
                             }
                         </li>
                         <li class="nav-item">

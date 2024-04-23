@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Managements;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize(Roles = "Admin")]
+
     public class PriceController : Controller
     {
         private readonly ApplicationDbContext _context;

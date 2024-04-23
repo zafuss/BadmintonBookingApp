@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using BadmintonBookingApp.Data;
 using BadmintonBookingApp.Models.Facilities;
 using BadmintonBookingApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
-namespace BadmintonBookingApp.Controllers
+namespace BadmintonBookingApp.Areas.Admin.Controllers
 {
+    [Area("Admin"), Authorize(Roles = "Admin")]
+
     public class CourtController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly ICourtRepository _courtRepository;
         private static DateTime _dateTime;
 
-        public CourtController(ApplicationDbContext context,ICourtRepository courtRepository)
+        public CourtController(ApplicationDbContext context, ICourtRepository courtRepository)
         {
             _context = context;
             _courtRepository = courtRepository;
