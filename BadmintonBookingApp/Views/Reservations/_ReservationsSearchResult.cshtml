@@ -1,0 +1,106 @@
+﻿@using BadmintonBookingApp.Models.Padding
+@model PaginatedList<BadmintonBookingApp.Models.Reservations.Reservation>
+@{
+    ViewData["Title"] = "_ReservarionsSearchResult";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Deposite
+            </th>
+            <th>
+                CreateDate
+            </th>
+            <th>
+                BookingDate
+            </th>
+            <th>
+               StartTime
+            </th>
+            <th>
+                EndTime
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deposite)
+                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.BookingDate)
+            </td> *@
+                <td>
+                    @item.CreateDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.BookingDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.StartTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @item.EndTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
+                    @*  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= @Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == @Model.PageIndex ?"active" : "")">
+                    <a class="page-link" onclick="test(@i)">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+<script>
+    function test(number) {
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+        $.ajax({
+            url: "@Url.Action("SearchReservations", "Reservations")",
+            data: { startDate: startTime, endDate: endTime, pageNumber: number },
+            type: "Post",
+            success: function (result) {
+                $("#itemlist").html("");
+                $("#itemlist").html(result);
+            },
+            error: function (result) {
+                window.alert("This is an unhandled exception. ");
+            }
+        });
+    }
+</script>

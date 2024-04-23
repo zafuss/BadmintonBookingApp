@@ -1,13 +1,39 @@
-﻿@model IEnumerable<BadmintonBookingApp.Models.Reservations.Reservation>
-
+﻿@using BadmintonBookingApp.Models.Padding
+@model PaginatedList<BadmintonBookingApp.Models.Reservations.Reservation>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @* <img class="parallax-slider" src="~/images/Checkout.jpg" style="position: absolute; width:100%"> *@
 <a asp-action="Create" asp-controller="Reservations" class="btn btn-primary">Create new</a>
-
-<table class="table">
+<div>
+    <form class="d-flex  tm-search-form dropdown" method="get" id="search-form">
+        <div class="col" style="max-width:300px">
+            <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column;max-width:250px">
+                <label class="form-label" style="text-align:center;max-width:250px">Start Time</label>
+                <input type="date" min="06:00" max="21:00" class="form-control round-input" style="max-width:250px;color:black" placeholder="Start Time" id="startTime" >               
+            </div>
+        </div>
+        <div class="col" style="max-width:300px">
+            <div class="form-outline form-white mb-4" style="display: flex; flex-direction: column;max-width:250px">
+                <label class="form-label" style="text-align:center;max-width:250px;">End Time</label>
+                <input type="date" min="06:00" max="21:00" class="form-control round-input" style="max-width:250px;color:black" placeholder="End Time" id="endTime">
+            </div>
+        </div>
+        <div class="col" style="max-width:300px;" >
+            <button class="btn btn-outline-success tm-search-btn" type="button" value="Search" id="addBtn" style="margin-top:10%" > 
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="btn btn-outline-success tm-search-btn" type="button" id="reset" style="margin-top:10%" onclick="Click()" >
+                Reset
+            </button>
+        </div>
+    </form>
+</div>
+<div id="itemlist">
+    <partial name="_ReservationsSearchResult" model="@Model" />
+</div>
+@* <table class="table">
     <thead>
         <tr>
             <th>
@@ -20,7 +46,7 @@
                 @Html.DisplayNameFor(model => model.BookingDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
+                @Html.DisplayNameFor(model => model.StartTime)       
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EndTime)
@@ -46,7 +72,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BookingDate)
-                </td> *@
+                </td> 
                 <td>
                    @item.CreateDate.ToShortDateString()
                 </td>
@@ -68,9 +94,52 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> 
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a> 
-                   @*  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> *@
+                   @*  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> 
                 </td>
             </tr>
         }
     </tbody>
-</table>
+</table> *@
+@section Scripts {
+    <script>
+
+        $(function () {
+            $("#addBtn").click(function () {
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+                $.ajax({
+                    url: "@Url.Action("SearchReservations", "Reservations")",
+                    data: { startDate: startTime, endDate: endTime },
+                    type: "Post",
+                    success: function (result) {
+                        $("#itemlist").html("");
+                        $("#itemlist").html(result);
+                    },
+                    error: function (result) {
+                        window.alert("This is an unhandled exception. ");
+                    }
+                });
+            });
+        });
+    </script>
+}
+<script>
+    function Click() {
+        document.getElementById("startTime").value = "";
+        document.getElementById("endTime").value = "";
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+        $.ajax({
+            url: "@Url.Action("SearchReservations", "Reservations")",
+            data: { startDate: startTime, endDate: endTime },
+            type: "Post",
+            success: function (result) {
+                $("#itemlist").html("");
+                $("#itemlist").html(result);
+            },
+            error: function (result) {
+                window.alert("This is an unhandled exception. ");
+            }
+        });
+    }
+</script>
