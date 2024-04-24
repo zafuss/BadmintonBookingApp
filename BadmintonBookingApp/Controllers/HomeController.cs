@@ -29,7 +29,7 @@ namespace BadmintonBookingApp.Controllers
             //var services = await _serviceRepository.GetAllAsync();
             IQueryable<Service> servicesQuery;
             servicesQuery = await _serviceRepository.GetServices();
-            var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 9);
+            var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 8);
             UserModel _userModel = new UserModel(paginatedServices, await _courtRepository.GetAllAsync());
             ViewBag.CurrentPageName = "HomePage";
             return View(_userModel);
@@ -39,7 +39,7 @@ namespace BadmintonBookingApp.Controllers
         {
             IQueryable<Service> servicesQuery;
             servicesQuery = await _serviceRepository.GetServices();
-            var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 9);
+            var paginatedServices = await PaginatedList<Service>.CreateAsync(servicesQuery, pageNumber, 8);
             UserModel _userModel = new UserModel(paginatedServices, await _courtRepository.GetAllAsync());
             return PartialView("_IndexHome", _userModel);
         }
